@@ -2482,10 +2482,14 @@ function urlRewriteWithDomain($url, $domain)
         return $url;
     }
 
-    str_starts_with($url, NV_MY_DOMAIN) && $url = substr($url, strlen(NV_MY_DOMAIN));
-    if (NV_MAIN_DOMAIN != NV_MY_DOMAIN and str_starts_with($url, NV_MAIN_DOMAIN)) {
-        $url = substr($url, strlen(NV_MAIN_DOMAIN));
+    $url_info = parse_url($url);
+    if (isset($url_info['scheme'], $url_info['host']) and defined('CUSTOM_REWRITE_DOMAIN')) {
+        return $url;
     }
+    $url = '';
+    !empty($url_info['path']) && $url .= $url_info['path'];
+    !empty($url_info['query']) && $url .= '?' . $url_info['query'];
+    !empty($url_info['fragment']) && $url .= '#' . $url_info['fragment'];
 
     return $domain . $url;
 }
