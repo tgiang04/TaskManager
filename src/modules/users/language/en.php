@@ -910,6 +910,9 @@ $lang_module['tstep_link'] = 'Two-step authentication management link';
 $lang_module['pass_link'] = 'Password change link';
 $lang_module['code_link'] = 'Backup code download link';
 $lang_module['passkey_link'] = 'Passkey management link';
+$lang_module['note_webview1'] = 'You are opening this page in a WebView window. The login feature using passkey and third-party may not work properly. If you want to use them instead of password login, please open this page in a browser to continue.';
+$lang_module['note_webview2'] = 'You are opening this page in a WebView window. The login feature using passkey may not work properly. If you want to use it instead of password login, please open this page in a browser to continue.';
+$lang_module['note_webview3'] = 'You are opening this page in a WebView window. The third-party login feature below may not work properly. If you want to use it instead of password login, please open this page in a browser to continue.';
 
 $lang_module['merge_field_active_deadline'] = 'Expired time for active';
 $lang_module['merge_field_link'] = 'Link';

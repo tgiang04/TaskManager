@@ -900,6 +900,27 @@ $(function() {
         location.reload();
     });
 
+    // Xử lý cảnh báo của sổ WebView trên tất cả các form đăng nhập
+    if (isInAppBrowser()) {
+        $('form[data-toggle="userLogin"]').each(function() {
+            const form = $(this);
+            const thirdPartyLogin = ($('[data-toggle="openID_load"]', form).length > 0 || $('.g_id_signin', form).length > 0);
+            const ele = $('[data-toggle="webview-warning"]', form);
+            let message = '';
+            if (thirdPartyLogin && nukeviet.WebAuthnSupported) {
+                message = form.data('note-webview1');
+            } else if (nukeviet.WebAuthnSupported && !thirdPartyLogin) {
+                message = form.data('note-webview2');
+            } else if (thirdPartyLogin && !nukeviet.WebAuthnSupported) {
+                message = form.data('note-webview3');
+            }
+            if (message) {
+                ele.removeClass('hidden');
+                ele.html(message);
+            }
+        });
+    }
+
     // Chọn phương thức xác thực 2 bước khi đăng nhập
     $('[data-toggle="2fa-choose"]').on('click', function(e) {
         e.preventDefault();

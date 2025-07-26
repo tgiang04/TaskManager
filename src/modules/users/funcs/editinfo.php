@@ -205,7 +205,7 @@ function get_field_config()
  */
 function opidr($openid_info)
 {
-    global $nv_Lang;
+    global $nv_Lang, $module_name;
 
     if ($openid_info == 1) {
         $openid_info = [
@@ -243,6 +243,7 @@ function opidr($openid_info)
             'mess' => $nv_Lang->getModule('openid_added')
         ];
     }
+    $openid_info['redirect'] = nv_url_rewrite(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=editinfo/openid', true);
     $contents = openid_callback($openid_info);
 
     include NV_ROOTDIR . '/includes/header.php';

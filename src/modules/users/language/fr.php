@@ -910,6 +910,9 @@ $lang_module['tstep_link'] = 'Lien de gestion de l\'authentification à deux ét
 $lang_module['pass_link'] = 'Lien de changement de mot de passe';
 $lang_module['code_link'] = 'Lien de téléchargement du code de sauvegarde';
 $lang_module['passkey_link'] = 'Lien de gestion des clés de passe';
+$lang_module['note_webview1'] = 'Vous ouvrez cette page dans une fenêtre WebView. La connexion avec une clé d\'accès et via un tiers peut ne pas fonctionner correctement. Si vous souhaitez utiliser ces méthodes au lieu du mot de passe, veuillez ouvrir cette page dans un navigateur pour continuer.';
+$lang_module['note_webview2'] = 'Vous ouvrez cette page dans une fenêtre WebView. La connexion avec une clé d\'accès peut ne pas fonctionner correctement. Si vous souhaitez utiliser cette méthode au lieu du mot de passe, veuillez ouvrir cette page dans un navigateur pour continuer.';
+$lang_module['note_webview3'] = 'Vous ouvrez cette page dans une fenêtre WebView. La connexion via un tiers ci-dessous peut ne pas fonctionner correctement. Si vous souhaitez utiliser cette méthode au lieu du mot de passe, veuillez ouvrir cette page dans un navigateur pour continuer.';
 
 $lang_module['merge_field_active_deadline'] = 'Temps écoulé pour actif';
 $lang_module['merge_field_link'] = 'Lien';
