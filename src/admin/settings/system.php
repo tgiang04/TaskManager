@@ -206,6 +206,28 @@ if ($checkss == $nv_Request->get_string('checkss', 'post')) {
 
         $array_config_global['unsign_vietwords'] = (int) $nv_Request->get_bool('unsign_vietwords', 'post', false);
 
+        $array_config_global['cached'] = $nv_Request->get_title('cached', 'post', 'files');
+        if (!in_array($array_config_global['cached'], ['files', 'memcached', 'redis'])) {
+            $array_config_global['cached'] = 'files';
+        }
+        if (in_array($array_config_global['cached'], ['memcached', 'redis'])) {
+            if (!in_array($array_config_global['cached'], get_loaded_extensions())) {
+                nv_jsonOutput([
+                    'status' => 'error',
+                    'mess' => $nv_Lang->getModule('cached_extension_needed', $array_config_global['cached'], ucfirst($array_config_global['cached']))
+                ]);
+            }
+        }
+        
+        $array_config_global['memcached_host'] = $nv_Request->get_title('memcached_host', 'post', '127.0.0.1');
+        $array_config_global['memcached_port'] = $nv_Request->get_int('memcached_port', 'post', 11211);
+        $array_config_global['redis_host'] = $nv_Request->get_title('redis_host', 'post', '127.0.0.1');
+        $array_config_global['redis_port'] = $nv_Request->get_int('redis_port', 'post', 6379);
+        $array_config_global['redis_password'] = $nv_Request->get_title('redis_password', 'post', '');
+        $array_config_global['redis_db_index'] = $nv_Request->get_int('redis_db_index', 'post', 0);
+        $array_config_global['redis_timeout'] = $nv_Request->get_float('redis_timeout', 'post', 2.5);
+        // INSERT INTO nv5_config (config_name, config_value, lang, module) VALUES ('cached', 'files', 'sys', 'global'), ('memcached_host', '127.0.0.1', 'sys', 'global'), ('memcached_port', 11211, 'sys', 'global'), ('redis_host', '127.0.0.1', 'sys', 'global'), ('redis_port', 6379, 'sys', 'global'), ('redis_password', '', 'sys', 'global'), ('redis_db_index', 0, 'sys', 'global'), ('redis_timeout', 2.5, 'sys', 'global');
+
         $sth = $db->prepare('UPDATE ' . NV_CONFIG_GLOBALTABLE . " SET config_value = :config_value WHERE lang = 'sys' AND module = 'global' AND config_name = :config_name");
         foreach ($array_config_global as $config_name => $config_value) {
             $sth->bindParam(':config_name', $config_name, PDO::PARAM_STR, 30);
@@ -291,7 +313,6 @@ $tpl->setTemplateDir(get_module_tpl_dir('system.tpl'));
 $tpl->assign('LANG', $nv_Lang);
 $tpl->assign('MODULE_NAME', $module_name);
 $tpl->assign('OP', $op);
-
 $tpl->assign('DATA', $global_config);
 $tpl->assign('ALLOW_SITELANGS', $allow_sitelangs);
 $tpl->assign('LANGUAGE_ARRAY', $language_array);

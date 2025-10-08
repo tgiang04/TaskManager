@@ -285,28 +285,28 @@ function set_ini_file(&$sys_info)
         $session_save_handler = ini_get('session.save_handler');
         $session_save_path = ini_get('session.save_path');
         if (strcasecmp($global_config['session_handler'], $session_save_handler) != 0) {
-            if ($global_config['session_handler'] == 'memcached' and in_array('memcached', $sys_info['support_cache'], true) and defined('NV_MEMCACHED_HOST') and defined('NV_MEMCACHED_PORT') and NV_MEMCACHED_HOST != '' and NV_MEMCACHED_PORT != '') {
+            if ($global_config['session_handler'] == 'memcached' and in_array('memcached', $sys_info['support_cache'], true) and !empty($global_config['memcached_host']) and !empty($global_config['memcached_port']) ) {
                 ini_set('session.save_handler', 'memcached');
-                $session_save_path != NV_MEMCACHED_HOST . ':' . NV_MEMCACHED_PORT && ini_set('session.save_path', NV_MEMCACHED_HOST . ':' . NV_MEMCACHED_PORT);
+                $session_save_path != $global_config['memcached_host'] . ':' . $global_config['memcached_port'] && ini_set('session.save_path', $global_config['memcached_host'] . ':' . $global_config['memcached_port']);
                 $new_session_save_handler = ini_get('session.save_handler');
                 $new_session_save_path = ini_get('session.save_path');
-                if ($new_session_save_handler == 'memcached' and $new_session_save_path == NV_MEMCACHED_HOST . ':' . NV_MEMCACHED_PORT) {
+                if ($new_session_save_handler == 'memcached' and $new_session_save_path == $global_config['memcached_host'] . ':' . $global_config['memcached_port']) {
                     $ini_set['session.save_handler'] = 'memcached';
-                    $new_session_save_path != $session_save_path && $ini_set['session.save_path'] = NV_MEMCACHED_HOST . ':' . NV_MEMCACHED_PORT;
+                    $new_session_save_path != $session_save_path && $ini_set['session.save_path'] = $global_config['memcached_host'] . ':' . $global_config['memcached_port'];
                     $session_save_handler = $new_session_save_handler;
                     $session_save_path = $new_session_save_path;
                 } else {
                     ini_set('session.save_handler', $session_save_handler);
                     $new_session_save_path != $session_save_path && ini_set('session.save_path', $session_save_path);
                 }
-            } elseif ($global_config['session_handler'] == 'redis' and in_array('redis', $sys_info['support_cache'], true) and defined('NV_REDIS_HOST') and defined('NV_REDIS_PORT') and NV_REDIS_HOST != '' and NV_REDIS_PORT != '') {
+            } elseif ($global_config['session_handler'] == 'redis' and in_array('redis', $sys_info['support_cache'], true) and !empty($global_config['redis_host']) and !empty($global_config['redis_port'])) {
                 ini_set('session.save_handler', 'redis');
-                $session_save_path != NV_REDIS_HOST . ':' . NV_REDIS_PORT && ini_set('session.save_path', NV_REDIS_HOST . ':' . NV_REDIS_PORT);
+                $session_save_path != $global_config['redis_host'] . ':' . $global_config['redis_port'] && ini_set('session.save_path', $global_config['redis_host'] . ':' . $global_config['redis_port']);
                 $new_session_save_handler = ini_get('session.save_handler');
                 $new_session_save_path = ini_get('session.save_path');
-                if ($new_session_save_handler == 'redis' and $new_session_save_path == NV_REDIS_HOST . ':' . NV_REDIS_PORT) {
+                if ($new_session_save_handler == 'redis' and $new_session_save_path == $global_config['redis_host'] . ':' . $global_config['redis_port']) {
                     $ini_set['session.save_handler'] = 'redis';
-                    $new_session_save_path != $session_save_path && $ini_set['session.save_path'] = NV_REDIS_HOST . ':' . NV_REDIS_PORT;
+                    $new_session_save_path != $session_save_path && $ini_set['session.save_path'] = $global_config['redis_host'] . ':' . $global_config['redis_port'];
                     $session_save_handler = $new_session_save_handler;
                     $session_save_path = $new_session_save_path;
                 } else {

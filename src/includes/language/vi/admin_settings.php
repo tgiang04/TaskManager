@@ -633,3 +633,17 @@ $lang_module['pp_source_all'] = 'Tương đương * - Cho phép tất cả các 
 $lang_module['pp_source_self'] = 'self - Cho phép từ tên miền này, không bao gồm miền phụ';
 
 $lang_module['fp_act'] = 'Kích hoạt FP';
+
+$lang_module['cache_settings'] = 'Các thiết lập bộ đệm';
+$lang_module['cache_use'] = 'Sử dụng bộ đệm';
+$lang_module['files_cached'] = 'Files';
+$lang_module['memcached_host'] = 'Máy chủ Memcached';
+$lang_module['memcached_port'] = 'Cổng kết nối Memcached';
+$lang_module['redis_host'] = 'Máy chủ Redis';
+$lang_module['redis_port'] = 'Cổng kết nối Redis';
+$lang_module['redis_password'] = 'Mật khẩu kết nối Redis';
+$lang_module['redis_db_index'] = 'Chỉ mục cơ sở dữ liệu Redis';
+$lang_module['redis_timeout'] = 'Thời gian chờ kết nối Redis';
+$lang_module['redis_timeout_unit'] = 'giây';
+$lang_module['cached_extension_needed'] = 'Hệ thống chưa được cài đặt extension %s. Do đó không thể sử dụng bộ đệm %s.';
+$lang_module['redis_pass_note'] = 'Mật khẩu mặc định được để trống, nhưng nếu có, nó sẽ được gửi dưới dạng văn bản không mã hóa qua mạng. Hãy đảm bảo rằng kết nối đến máy chủ Redis được bảo mật.';

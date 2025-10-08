@@ -633,3 +633,17 @@ $lang_module['pp_source_all'] = 'Equivalent * - Allows all sources to be used';
 $lang_module['pp_source_self'] = 'self - Allow from this domain, excluding subdomains';
 
 $lang_module['fp_act'] = 'Active FP';
+
+$lang_module['cache_settings'] = 'Cache settings';
+$lang_module['cache_use'] = 'Use cache';
+$lang_module['files_cached'] = 'Files';
+$lang_module['memcached_host'] = 'Memcached host';
+$lang_module['memcached_port'] = 'Memcached connection port';
+$lang_module['redis_host'] = 'Redis host';
+$lang_module['redis_port'] = 'Redis connection port';
+$lang_module['redis_password'] = 'Redis connection password';
+$lang_module['redis_db_index'] = 'Redis database index';
+$lang_module['redis_timeout'] = 'Redis connection timeout';
+$lang_module['redis_timeout_unit'] = 'seconds';
+$lang_module['cached_extension_needed'] = 'The system does not have the %s extension installed. Therefore, the %s cache cannot be used.';
+$lang_module['redis_pass_note'] = 'The default password is left blank, but if set, it will be sent in plain text over the network. Please ensure that the connection to the Redis server is secure.';

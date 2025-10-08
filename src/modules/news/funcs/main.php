@@ -455,7 +455,7 @@ if (empty($contents)) {
             'schemas' => $schemas,
             'description' => $desc,
             'keyword' => $kw
-        ]));
+        ]), 3600);
     }
 }
 

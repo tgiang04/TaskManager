@@ -277,9 +277,9 @@ define('AUTO_MINIFIED', (!empty($global_config['assets_cdn_url']) and in_array(N
 
 // Ket noi Cache
 if ($global_config['cached'] == 'memcached') {
-    $nv_Cache = new NukeViet\Cache\Memcached(NV_MEMCACHED_HOST, NV_MEMCACHED_PORT, NV_LANG_DATA, NV_CACHE_PREFIX);
+    $nv_Cache = new NukeViet\Cache\Memcached($global_config['memcached_host'], $global_config['memcached_port'], NV_LANG_DATA, NV_CACHE_PREFIX);
 } elseif ($global_config['cached'] == 'redis') {
-    $nv_Cache = new NukeViet\Cache\Redis(NV_REDIS_HOST, NV_REDIS_PORT, NV_REDIS_TIMEOUT, NV_REDIS_PASSWORD, NV_REDIS_DBINDEX, NV_LANG_DATA, NV_CACHE_PREFIX);
+    $nv_Cache = new NukeViet\Cache\Redis($global_config['redis_host'], $global_config['redis_port'], $global_config['redis_timeout'], $global_config['redis_password'], $global_config['redis_db_index'], NV_LANG_DATA, NV_CACHE_PREFIX);
 } else {
     $nv_Cache = new NukeViet\Cache\Files(NV_ROOTDIR . '/' . NV_CACHEDIR, NV_LANG_DATA, NV_CACHE_PREFIX);
 }
