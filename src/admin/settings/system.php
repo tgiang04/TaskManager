@@ -226,7 +226,6 @@ if ($checkss == $nv_Request->get_string('checkss', 'post')) {
         $array_config_global['redis_password'] = $nv_Request->get_title('redis_password', 'post', '');
         $array_config_global['redis_db_index'] = $nv_Request->get_int('redis_db_index', 'post', 0);
         $array_config_global['redis_timeout'] = $nv_Request->get_float('redis_timeout', 'post', 2.5);
-        // INSERT INTO nv5_config (config_name, config_value, lang, module) VALUES ('cached', 'files', 'sys', 'global'), ('memcached_host', '127.0.0.1', 'sys', 'global'), ('memcached_port', 11211, 'sys', 'global'), ('redis_host', '127.0.0.1', 'sys', 'global'), ('redis_port', 6379, 'sys', 'global'), ('redis_password', '', 'sys', 'global'), ('redis_db_index', 0, 'sys', 'global'), ('redis_timeout', 2.5, 'sys', 'global');
 
         $sth = $db->prepare('UPDATE ' . NV_CONFIG_GLOBALTABLE . " SET config_value = :config_value WHERE lang = 'sys' AND module = 'global' AND config_name = :config_name");
         foreach ($array_config_global as $config_name => $config_value) {
