@@ -441,7 +441,7 @@
                     <div class="row mb-3 redis-settings">
                         <label for="element_redis_password" class="col-sm-3 col-form-label text-sm-end">{$LANG->getModule('redis_password')}</label>
                         <div class="col-sm-8 col-lg-6 col-xxl-5">
-                            <input type="password" class="form-control" id="element_redis_password" name="redis_password" value="{$DATA.redis_password}">
+                            <input type="password" class="form-control" id="element_redis_password" name="redis_password" value="{$CRYPT->decrypt($DATA.redis_password)}">
                             <div class="form-text">{$LANG->getModule('redis_pass_note')}</div>
                         </div>
                     </div>

@@ -223,7 +223,7 @@ if ($checkss == $nv_Request->get_string('checkss', 'post')) {
         $array_config_global['memcached_port'] = $nv_Request->get_int('memcached_port', 'post', 11211);
         $array_config_global['redis_host'] = $nv_Request->get_title('redis_host', 'post', '127.0.0.1');
         $array_config_global['redis_port'] = $nv_Request->get_int('redis_port', 'post', 6379);
-        $array_config_global['redis_password'] = $nv_Request->get_title('redis_password', 'post', '');
+        $array_config_global['redis_password'] = $crypt->encrypt($nv_Request->get_title('redis_password', 'post', ''));
         $array_config_global['redis_db_index'] = $nv_Request->get_int('redis_db_index', 'post', 0);
         $array_config_global['redis_timeout'] = $nv_Request->get_float('redis_timeout', 'post', 2.5);
 
@@ -318,6 +318,7 @@ $tpl->assign('LANGUAGE_ARRAY', $language_array);
 $tpl->assign('SITE_MODS', $site_mods);
 $tpl->assign('ADMINTHEMES', $adminThemes);
 $tpl->assign('CLOSED_SITE_MODES', $closed_site_Modes);
+$tpl->assign('CRYPT', $crypt);
 
 $array_config_global = [];
 if (defined('NV_IS_GODADMIN')) {
