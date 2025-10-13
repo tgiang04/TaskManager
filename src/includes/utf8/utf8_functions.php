@@ -294,7 +294,7 @@ function change_alias_tags($alias)
  */
 function nv_clean60($string, $num = 60, $specialchars = true)
 {
-    $string = nv_unhtmlspecialchars($string);
+    $string = nv_unhtmlspecialchars(str_replace('&nbsp;', ' ', $string));
 
     $len = nv_strlen($string);
     if ($num and $num < $len) {
