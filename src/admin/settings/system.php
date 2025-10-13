@@ -232,7 +232,7 @@ if ($checkss == $nv_Request->get_string('checkss', 'post')) {
         $array_config_global['redis_port'] = $nv_Request->get_int('redis_port', 'post', 6379);
         $redis_password = nv_unhtmlspecialchars($nv_Request->get_title('redis_password', 'post', '', 0));
         $redis_password == '******' && $redis_password = $global_config['redis_password'];
-        // $array_config_global['redis_password'] = $crypt->encrypt(nv_unhtmlspecialchars($nv_Request->get_title('redis_password', 'post', '')));
+        $array_config_global['redis_password'] = $crypt->encrypt($redis_password);
         $array_config_global['redis_db_index'] = $nv_Request->get_int('redis_db_index', 'post', 0);
         $array_config_global['redis_timeout'] = $nv_Request->get_float('redis_timeout', 'post', 2.5);
         if ($array_config_global['cached'] == 'redis' && (empty($array_config_global['redis_host']) || empty($array_config_global['redis_port']))) {
