@@ -279,7 +279,7 @@ define('AUTO_MINIFIED', (!empty($global_config['assets_cdn_url']) and in_array(N
 if ($global_config['cached'] == 'memcached') {
     $nv_Cache = new NukeViet\Cache\Memcached($global_config['memcached_host'], $global_config['memcached_port'], NV_LANG_DATA, NV_CACHE_PREFIX);
 } elseif ($global_config['cached'] == 'redis') {
-    $nv_Cache = new NukeViet\Cache\Redis($global_config['redis_host'], $global_config['redis_port'], $global_config['redis_timeout'], $crypt->decrypt($global_config['redis_password']), $global_config['redis_db_index'], NV_LANG_DATA, NV_CACHE_PREFIX);
+    $nv_Cache = new NukeViet\Cache\Redis($global_config['redis_host'], $global_config['redis_port'], $global_config['redis_timeout'], $global_config['redis_password'], $global_config['redis_db_index'], NV_LANG_DATA, NV_CACHE_PREFIX);
 } else {
     $nv_Cache = new NukeViet\Cache\Files(NV_ROOTDIR . '/' . NV_CACHEDIR, NV_LANG_DATA, NV_CACHE_PREFIX);
 }
@@ -348,8 +348,6 @@ if (
 ) {
     require NV_ROOTDIR . '/includes/core/flood_blocker.php';
 }
-
-$global_config['ftp_user_pass'] = $crypt->decrypt($global_config['ftp_user_pass']);
 
 // Hook sector 1
 nv_apply_hook('', 'sector1');
@@ -459,7 +457,6 @@ $global_config['array_user_allowed_theme'] = empty($global_config['user_allowed_
 
 define('NV_MAIN_DOMAIN', (!empty($global_config['site_domain']) and in_array($global_config['site_domain'], $global_config['my_domains'], true)) ? str_replace(NV_SERVER_NAME, $global_config['site_domain'], NV_MY_DOMAIN) : NV_MY_DOMAIN);
 
-!empty($global_config['smtp_password']) && $global_config['smtp_password'] = $crypt->decrypt($global_config['smtp_password']);
 if ($sys_info['ini_set_support']) {
     ini_set('sendmail_from', $global_config['site_email']);
 }

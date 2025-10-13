@@ -103,7 +103,7 @@ function nv_var_export($var_array, $isInt = false)
  */
 function nv_save_file_config_global()
 {
-    global $nv_Cache, $db, $global_config, $db_config;
+    global $nv_Cache, $db, $global_config, $db_config, $crypt;
 
     if ($global_config['idsite']) {
         return false;
@@ -157,6 +157,7 @@ function nv_save_file_config_global()
 
     $config_name_array = ['file_allowed_ext', 'forbid_extensions', 'forbid_mimes', 'allow_sitelangs', 'allow_request_mods', 'config_sso'];
     $config_name_json = ['crosssite_valid_domains', 'crosssite_valid_ips', 'crosssite_allowed_variables', 'crossadmin_valid_domains', 'crossadmin_valid_ips', 'domains_whitelist', 'ip_allow_null_origin', 'zaloWebhookIPs', 'end_url_variables', 'cdn_url', 'region'];
+    $config_name_encrypted = ['redis_password', 'fpt_user_pass', 'smtp_password'];
 
     foreach ($config_variable as $c_config_name => $c_config_value) {
         if (in_array($c_config_name, $config_name_array, true)) {
@@ -194,6 +195,8 @@ function nv_save_file_config_global()
             } else {
                 $content_config .= "\$global_config['" . $c_config_name . "'] = " . nv_var_export($value) . ";\n";
             }
+        } elseif (in_array($c_config_name, $config_name_encrypted, true) and !empty($c_config_value)) {
+            $content_config .= "\$global_config['" . $c_config_name . "'] = " . $crypt->decrypt($c_config_value) . ";\n";
         } else {
             if (preg_match('/^(0|[1-9][0-9]*)$/', $c_config_value) and $c_config_name != 'facebook_client_id') {
                 $content_config .= "\$global_config['" . $c_config_name . "'] = " . $c_config_value . ";\n";

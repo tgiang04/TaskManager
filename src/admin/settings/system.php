@@ -218,14 +218,29 @@ if ($checkss == $nv_Request->get_string('checkss', 'post')) {
                 ]);
             }
         }
-        
-        $array_config_global['memcached_host'] = $nv_Request->get_title('memcached_host', 'post', '127.0.0.1');
-        $array_config_global['memcached_port'] = $nv_Request->get_int('memcached_port', 'post', 11211);
-        $array_config_global['redis_host'] = $nv_Request->get_title('redis_host', 'post', '127.0.0.1');
+
+        $array_config_global['memcached_host'] = nv_unhtmlspecialchars($nv_Request->get_title('memcached_host', 'post', '127.0.0.1', 1));
+        $array_config_global['memcached_port'] = nv_unhtmlspecialchars($nv_Request->get_int('memcached_port', 'post', 11211));
+        if ($array_config_global['cached'] == 'memcached' && (empty($array_config_global['memcached_host']) || empty($array_config_global['memcached_port']))) {
+            nv_jsonOutput([
+                'status' => 'error',
+                'mess' => $nv_Lang->getModule('memcached_config_needed')
+            ]);
+        }
+
+        $array_config_global['redis_host'] = nv_unhtmlspecialchars($nv_Request->get_title('redis_host', 'post', '127.0.0.1', 1));
         $array_config_global['redis_port'] = $nv_Request->get_int('redis_port', 'post', 6379);
-        $array_config_global['redis_password'] = $crypt->encrypt($nv_Request->get_title('redis_password', 'post', ''));
+        $redis_password = nv_unhtmlspecialchars($nv_Request->get_title('redis_password', 'post', '', 0));
+        $redis_password == '******' && $redis_password = $global_config['redis_password'];
+        // $array_config_global['redis_password'] = $crypt->encrypt(nv_unhtmlspecialchars($nv_Request->get_title('redis_password', 'post', '')));
         $array_config_global['redis_db_index'] = $nv_Request->get_int('redis_db_index', 'post', 0);
         $array_config_global['redis_timeout'] = $nv_Request->get_float('redis_timeout', 'post', 2.5);
+        if ($array_config_global['cached'] == 'redis' && (empty($array_config_global['redis_host']) || empty($array_config_global['redis_port']))) {
+            nv_jsonOutput([
+                'status' => 'error',
+                'mess' => $nv_Lang->getModule('redis_config_needed')
+            ]);
+        }
 
         $sth = $db->prepare('UPDATE ' . NV_CONFIG_GLOBALTABLE . " SET config_value = :config_value WHERE lang = 'sys' AND module = 'global' AND config_name = :config_name");
         foreach ($array_config_global as $config_name => $config_value) {
@@ -304,6 +319,7 @@ if (!empty($global_config['site_reopening_time'])) {
 if (!empty($global_config['site_phone']) and !empty($global_config['site_int_phone'])) {
     $global_config['site_phone'] .= '[' . $global_config['site_int_phone'] . ']';
 }
+$global_config['redis_password'] = '******';
 
 $tpl = new \NukeViet\Template\NVSmarty();
 $tpl->registerPlugin('modifier', 'ddatetime', 'nv_datetime_format');
