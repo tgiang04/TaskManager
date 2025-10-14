@@ -45,7 +45,7 @@ class Sso
         $sso_reset = self::encrypt(urlRewriteWithDomain($sso_reset, NV_MY_DOMAIN));
 
         /** @disregard P1011 */
-        return SSO_REGISTER_DOMAIN . (!defined('SSO_REGISTER_LANGSINGLE') ? '/' . NV_LANG_DATA : '') . '/users/login/?sso_redirect=' . self::encrypt($return_url) . '&sso_reset=' . $sso_reset . '&client=' . urlencode(NV_MY_DOMAIN);
+        return SSO_REGISTER_DOMAIN . (!defined('SSO_REGISTER_LANGSINGLE') ? '/' . NV_LANG_DATA : '') . '/users/login/?sso_redirect=' . self::encrypt(str_replace('&amp;', '&', $return_url)) . '&sso_reset=' . $sso_reset . '&client=' . urlencode(NV_MY_DOMAIN);
     }
 
     /**
