@@ -95,7 +95,7 @@ if (!nv_function_exists('nv_block_headline')) {
 
         $array_bid_content = [];
 
-        $cache_file = NV_LANG_DATA . '_block_headline_' . NV_CACHE_PREFIX . '.cache';
+        $cache_file = 'block_headline_' . NV_CACHE_PREFIX . '.cache';
 
         if (($cache = $nv_Cache->getItem($module_name, $cache_file)) != false) {
             $array_bid_content = unserialize($cache);

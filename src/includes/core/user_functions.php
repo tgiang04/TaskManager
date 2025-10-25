@@ -83,7 +83,7 @@ function nv_blocks_content($sitecontent)
 
     $_posReal = array_combine($_posReal[0], $_posReal[3]);
 
-    $cache_file = NV_LANG_DATA . '_' . $global_config['module_theme'] . '_' . $module_name . '_' . NV_CACHE_PREFIX . '.cache';
+    $cache_file = $global_config['module_theme'] . '_' . $module_name . '_' . NV_CACHE_PREFIX . '.cache';
     $blocks = [];
 
     $cacheValid = false;

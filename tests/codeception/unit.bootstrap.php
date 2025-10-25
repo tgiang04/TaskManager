@@ -61,6 +61,14 @@ define('NV_LANG_INTERFACE', $global_config['allow_sitelangs'][0]);
 
 define('NV_CURRENTTIME', time());
 
+$nv_Server = new NukeViet\Core\Server();
+
+define('NV_SERVER_NAME', $nv_Server->getServerHost());
+define('NV_SERVER_PROTOCOL', $nv_Server->getServerProtocol());
+define('NV_SERVER_PORT', $nv_Server->getServerPort());
+
+define('NV_CACHE_PREFIX', md5($global_config['sitekey'] . NV_SERVER_NAME));
+
 if ($path_config) {
     $db = $db_slave = new NukeViet\Core\Database($db_config);
 } else {

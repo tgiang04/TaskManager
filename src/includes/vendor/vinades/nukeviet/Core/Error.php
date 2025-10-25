@@ -469,6 +469,8 @@ class Error
         $error = error_get_last();
 
         if (!empty($error) and $error['type'] === E_ERROR | E_PARSE) {
+            http_response_code(500);
+
             $file = substr(str_replace('\\', '/', preg_replace(['/\\\\/', "/\/{2,}/"], '/', $error['file'])), strlen(NV_ROOTDIR . '/'));
             $finded_track = false;
 

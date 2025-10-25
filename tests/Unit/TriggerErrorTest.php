@@ -32,7 +32,7 @@ class TriggerErrorTest extends \Codeception\Test\Unit
      */
     public function testTriggerErrorMustHaveHttpResponseCodeBefore()
     {
-        $files = $this->tester->listPhpFile(NV_ROOTDIR);
+        $files = $this->tester->listFile(NV_ROOTDIR);
         foreach ($files as $file) {
             if (str_starts_with($file, 'includes/vendor/guzzlehttp')) {
                 continue; // Bỏ qua các file của thư viện Guzzle

@@ -31,7 +31,7 @@ if (!nv_function_exists('nv_news_block_news')) {
         $order_articles_by = ($module_config[$module]['order_articles']) ? 'weight' : 'publtime';
         $numrow = $block_config['numrow'] ?? 20;
 
-        $cache_file = NV_LANG_DATA . '_' . preg_replace('/[^a-z0-9\_\-]+/', '_', $block_config['block_name']) . '_' . $numrow . '_' . NV_CACHE_PREFIX . '.cache';
+        $cache_file = preg_replace('/[^a-z0-9\_\-]+/', '_', $block_config['block_name']) . '_' . $numrow . '_' . NV_CACHE_PREFIX . '.cache';
         if (($cache = $nv_Cache->getItem($module, $cache_file)) != false) {
             $array_block_news = json_decode($cache, true);
         } else {

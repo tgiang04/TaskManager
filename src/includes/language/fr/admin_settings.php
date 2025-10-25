@@ -649,3 +649,6 @@ $lang_module['redis_timeout_unit'] = 'secondes';
 $lang_module['redis_config_needed'] = 'Veuillez saisir tous les paramètres pour vous connecter au serveur Redis';
 $lang_module['cached_extension_needed'] = 'L\'extension %s n\'est pas installée sur le système. Par conséquent, le cache %s ne peut pas être utilisé.';
 $lang_module['redis_pass_note'] = 'Le mot de passe par défaut est laissé vide, mais s\'il est défini, il sera envoyé en texte non chiffré sur le réseau. Assurez-vous que la connexion au serveur Redis est sécurisée.';
+$lang_module['cache_prefix'] = 'Préfixe de clé de cache';
+$lang_module['cache_prefix_note'] = 'Entrez le préfixe si vous utilisez Memcached ou Redis et que plusieurs sites Web utilisent le même serveur de cache pour éviter les conflits de clés de cache entre les sites Web. Le préfixe comprend les lettres a-z, les chiffres 0-9 et le trait de soulignement (_), et doit commencer par une lettre. Le cache de fichiers n\'utilise pas ce préfixe.';
+$lang_module['cache_prefix_invalid'] = 'Préfixe invalide. Accepte uniquement les lettres a-z, les chiffres 0-9 et le trait de soulignement (_) et doit commencer par une lettre.';

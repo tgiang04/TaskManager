@@ -171,7 +171,8 @@ if ($nv_Request->isset_request('scaptcha', 'get')) {
 // Class ma hoa du lieu
 $crypt = new NukeViet\Core\Encryption($global_config['sitekey']);
 
-$nv_Cache = new NukeViet\Cache\Files(NV_ROOTDIR . '/' . NV_CACHEDIR, NV_LANG_DATA, NV_CACHE_PREFIX);
+// Khởi tạo hệ thống cache
+$nv_Cache = NukeViet\Cache::getInstance($global_config);
 
 // Quản lý thẻ meta, header các máy chủ tìm kiếm
 $nv_BotManager = new NukeViet\Seo\BotManager(1);

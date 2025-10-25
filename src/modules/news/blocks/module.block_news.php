@@ -106,7 +106,7 @@ if (!nv_function_exists('nv_news_block_news')) {
 
         $numrow = (isset($block_config['numrow'])) ? $block_config['numrow'] : 20;
 
-        $cache_file = NV_LANG_DATA . '__block_news_' . $numrow . '_' . NV_CACHE_PREFIX . '.cache';
+        $cache_file = 'block_news_' . $numrow . '_' . NV_CACHE_PREFIX . '.cache';
         if (($cache = $nv_Cache->getItem($module, $cache_file)) != false) {
             $array_block_news = unserialize($cache);
         } else {

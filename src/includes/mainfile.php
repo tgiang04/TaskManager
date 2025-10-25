@@ -275,14 +275,8 @@ define('ASSETS_LANG_STATIC_URL', (in_array(NV_LANG_INTERFACE, ['en', 'fr', 'vi']
 // AUTO_MINIFIED - Tự thu nhỏ dung lượng file nếu thêm '.min' vào trước phần mở rộng .css, .js (Chỉ áp dụng khi mạng CDN jsDelivr được bật)
 define('AUTO_MINIFIED', (!empty($global_config['assets_cdn_url']) and in_array(NV_LANG_INTERFACE, ['en', 'fr', 'vi'], true)) ? '.min' : '');
 
-// Ket noi Cache
-if ($global_config['cached'] == 'memcached') {
-    $nv_Cache = new NukeViet\Cache\Memcached($global_config['memcached_host'], $global_config['memcached_port'], NV_LANG_DATA, NV_CACHE_PREFIX);
-} elseif ($global_config['cached'] == 'redis') {
-    $nv_Cache = new NukeViet\Cache\Redis($global_config['redis_host'], $global_config['redis_port'], $global_config['redis_timeout'], $global_config['redis_password'], $global_config['redis_db_index'], NV_LANG_DATA, NV_CACHE_PREFIX);
-} else {
-    $nv_Cache = new NukeViet\Cache\Files(NV_ROOTDIR . '/' . NV_CACHEDIR, NV_LANG_DATA, NV_CACHE_PREFIX);
-}
+// Khởi tạo hệ thống cache
+$nv_Cache = NukeViet\Cache::getInstance($global_config);
 
 // Xac dinh duong dan thuc den thu muc upload
 define('NV_UPLOADS_REAL_DIR', NV_ROOTDIR . '/' . NV_UPLOADS_DIR);

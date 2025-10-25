@@ -2894,8 +2894,8 @@ function nv_sys_mods($lang = '')
 
     empty($lang) && $lang = NV_LANG_DATA;
 
-    $cache_file = $lang . '_smods_' . NV_CACHE_PREFIX . '.cache';
-    if (($cache = $nv_Cache->getItem('modules', $cache_file)) != false) {
+    $cache_file = 'smods_' . NV_CACHE_PREFIX . '.cache';
+    if (($cache = $nv_Cache->getItem('modules', $cache_file, $lang)) != false) {
         return unserialize($cache);
     }
 
@@ -2943,7 +2943,7 @@ function nv_sys_mods($lang = '')
             $sys_mods[$m_title]['alias'][$f_name] = $f_alias;
         }
         $cache = serialize($sys_mods);
-        $nv_Cache->setItem('modules', $cache_file, $cache);
+        $nv_Cache->setItem('modules', $cache_file, $cache, $lang);
         unset($cache, $result);
     } catch (PDOException $e) {
         // trigger_error( $e->getMessage() );
@@ -4245,7 +4245,7 @@ function nv_d2u_get(string $str, ?int $hh = null, ?int $mm = null, ?int $ss = nu
  * @param int $mm
  * @param int $ss
  * @param string $lang
- * @return number
+ * @return int
  */
 function nv_d2u_post(string $str, ?int $hh = null, ?int $mm = null, ?int $ss = null, string $lang = '')
 {

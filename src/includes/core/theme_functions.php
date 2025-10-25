@@ -805,7 +805,7 @@ function nv_get_blocks(string $theme, bool $cache = true)
 {
     global $nv_Cache, $db;
 
-    $cache_file = NV_LANG_DATA . '_' . $theme . '_configposition_' . NV_CACHE_PREFIX . '.cache';
+    $cache_file = $theme . '_configposition_' . NV_CACHE_PREFIX . '.cache';
     if ($cache and ($cache_data = $nv_Cache->getItem('themes', $cache_file)) != false) {
         return unserialize($cache_data) ?: [];
     }

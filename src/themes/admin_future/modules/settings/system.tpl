@@ -460,6 +460,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <label for="element_cache_prefix" class="col-sm-3 col-form-label text-sm-end">{$LANG->getModule('cache_prefix')}</label>
+                        <div class="col-sm-8 col-lg-6 col-xxl-5">
+                            <input type="text" class="form-control" id="element_cache_prefix" name="cache_prefix" value="{$DATA.cache_prefix}">
+                            <div class="form-text">{$LANG->getModule('cache_prefix_note')}</div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-sm-8 offset-sm-3">
                             <button type="submit" class="btn btn-primary">{$LANG->getModule('submit')}</button>

@@ -1075,7 +1075,7 @@ function get_theme_filelist()
     global $nv_Cache;
 
     $themefilelist = [];
-    $cache_file = NV_LANG_DATA . '_' . 'themefiles_' . NV_CACHE_PREFIX . '.cache';
+    $cache_file = 'themefiles_' . NV_CACHE_PREFIX . '.cache';
     if (NV_DEBUG and defined('NV_IS_ADMIN')) {
         nv_scandirfile(NV_ROOTDIR . '/themes', '/([a-zA-Z0-9\.\-\_]+)\.(php|ini|json|ttf|woff|woff2|tpl|js|css|gif|jpg|jpeg|png|webp|avg|ico|xsl)$/', $themefilelist, 'themes');
         $nv_Cache->setItem('sys', $cache_file, json_encode($themefilelist));
@@ -1101,7 +1101,7 @@ function get_module_filelist()
     global $nv_Cache;
 
     $modulefilelist = [];
-    $cache_file = NV_LANG_DATA . '_' . 'modulefiles_' . NV_CACHE_PREFIX . '.cache';
+    $cache_file = 'modulefiles_' . NV_CACHE_PREFIX . '.cache';
     if (NV_DEBUG and defined('NV_IS_ADMIN')) {
         nv_scandirfile(NV_ROOTDIR . '/modules', '/([a-zA-Z0-9\.\-\_]+)\.(php|ini|json|ttf|woff|woff2|tpl|js|css|gif|jpg|jpeg|png|webp|avg|ico|xsl)$/', $modulefilelist, 'modules');
         $nv_Cache->setItem('sys', $cache_file, json_encode($modulefilelist));

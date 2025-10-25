@@ -214,7 +214,8 @@ if ($checkss == $nv_Request->get_string('checkss', 'post')) {
             if (!in_array($array_config_global['cached'], get_loaded_extensions())) {
                 nv_jsonOutput([
                     'status' => 'error',
-                    'mess' => $nv_Lang->getModule('cached_extension_needed', $array_config_global['cached'], ucfirst($array_config_global['cached']))
+                    'mess' => $nv_Lang->getModule('cached_extension_needed', $array_config_global['cached'], ucfirst($array_config_global['cached'])),
+                    'input' => 'cached'
                 ]);
             }
         }
@@ -224,7 +225,8 @@ if ($checkss == $nv_Request->get_string('checkss', 'post')) {
         if ($array_config_global['cached'] == 'memcached' && (empty($array_config_global['memcached_host']) || empty($array_config_global['memcached_port']))) {
             nv_jsonOutput([
                 'status' => 'error',
-                'mess' => $nv_Lang->getModule('memcached_config_needed')
+                'mess' => $nv_Lang->getModule('memcached_config_needed'),
+                'input' => empty($array_config_global['memcached_host']) ? 'memcached_host' : 'memcached_port'
             ]);
         }
 
@@ -238,7 +240,17 @@ if ($checkss == $nv_Request->get_string('checkss', 'post')) {
         if ($array_config_global['cached'] == 'redis' && (empty($array_config_global['redis_host']) || empty($array_config_global['redis_port']))) {
             nv_jsonOutput([
                 'status' => 'error',
-                'mess' => $nv_Lang->getModule('redis_config_needed')
+                'mess' => $nv_Lang->getModule('redis_config_needed'),
+                'input' => empty($array_config_global['redis_host']) ? 'redis_host' : 'redis_port'
+            ]);
+        }
+
+        $array_config_global['cache_prefix'] = nv_substr($nv_Request->get_title('cache_prefix', 'post', ''), 0, 50);
+        if (!empty($array_config_global['cache_prefix']) and !preg_match('/^[a-z]+[a-z0-9\_]*$/i', $array_config_global['cache_prefix'])) {
+            nv_jsonOutput([
+                'status' => 'error',
+                'mess' => $nv_Lang->getModule('cache_prefix_invalid'),
+                'input' => 'cache_prefix'
             ]);
         }
 

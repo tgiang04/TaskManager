@@ -224,6 +224,7 @@ $sql_create_table[] = 'INSERT INTO ' . NV_CONFIG_GLOBALTABLE . " (lang, module, 
 ('sys', 'global', 'redis_password', ''),
 ('sys', 'global', 'redis_db_index', '0'),
 ('sys', 'global', 'redis_timeout', '2.5'),
+('sys', 'global', 'cache_prefix', ''),
 
 ('sys', 'define', 'nv_gfx_width', '150'),
 ('sys', 'define', 'nv_gfx_height', '40'),

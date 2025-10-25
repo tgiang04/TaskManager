@@ -25,7 +25,7 @@ if (!nv_function_exists('nv_block_headline')) {
         global $nv_Cache, $module_name, $module_data, $db_slave, $module_upload, $global_array_cat, $global_config, $custom_preloads;
 
         $block_contents = [];
-        $cache_file = NV_LANG_DATA . '_' . preg_replace('/[^a-z0-9\_\-]+/', '_', $block_config['block_name']) . '_' . NV_CACHE_PREFIX . '.cache';
+        $cache_file = preg_replace('/[^a-z0-9\_\-]+/', '_', $block_config['block_name']) . '_' . NV_CACHE_PREFIX . '.cache';
         if (($cache = $nv_Cache->getItem($module_name, $cache_file)) != false) {
             $block_contents = json_decode($cache, true);
 

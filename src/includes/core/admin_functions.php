@@ -22,7 +22,7 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE')) {
 function nv_groups_list($mod_data = 'users')
 {
     global $nv_Cache;
-    $cache_file = NV_LANG_DATA . '_groups_list_' . NV_CACHE_PREFIX . '.cache';
+    $cache_file = 'groups_list_' . NV_CACHE_PREFIX . '.cache';
     if (($cache = $nv_Cache->getItem($mod_data, $cache_file)) != false) {
         return unserialize($cache);
     }

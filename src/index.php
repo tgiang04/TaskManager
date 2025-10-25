@@ -249,7 +249,7 @@ $is_mobile = false;
 set_theme_configs($global_config, $is_mobile, $module_info);
 
 // Xac dinh layout funcs cua module
-$cache_file = NV_LANG_DATA . '_' . md5($module_name . '_' . $global_config['module_theme']) . '_' . NV_CACHE_PREFIX . '.cache';
+$cache_file = md5($module_name . '_' . $global_config['module_theme']) . '_' . NV_CACHE_PREFIX . '.cache';
 if (($cache = $nv_Cache->getItem('modules', $cache_file)) != false) {
     $module_info['layout_funcs'] = unserialize($cache);
 } else {

@@ -1347,13 +1347,13 @@ if (!$is_search) {
 
     // Cache các số đếm, sẽ theo admin
     if (!defined('NV_IS_ADMIN_MODULE')) {
-        $cache_file = NV_LANG_DATA . '_admmainothers_' . $admin_info['admin_id'] . '_' . NV_CACHE_PREFIX . '.cache';
+        $cache_file = 'admmainothers_' . $admin_info['admin_id'] . '_' . NV_CACHE_PREFIX . '.cache';
     } else {
-        $cache_file = NV_LANG_DATA . '_admmainothers_' . NV_CACHE_PREFIX . '.cache';
+        $cache_file = 'admmainothers_' . NV_CACHE_PREFIX . '.cache';
     }
     $cacheTTL = 86400 * 7;
 
-    if (($cache = $nv_Cache->getItem($module_name, $cache_file, $cacheTTL)) != false) {
+    if (($cache = $nv_Cache->getItem($module_name, $cache_file, ttl: $cacheTTL)) != false) {
         [$array_others, $array_others_count] = json_decode($cache, true);
     } else {
         // Đếm số bài lưu nháp do tôi đăng và còn quyền xem
@@ -1432,7 +1432,7 @@ if (!$is_search) {
             ];
             $array_others_count += $number;
         }
-        $nv_Cache->setItem($module_name, $cache_file, json_encode([$array_others, $array_others_count]), $cacheTTL);
+        $nv_Cache->setItem($module_name, $cache_file, json_encode([$array_others, $array_others_count]), ttl: $cacheTTL);
     }
 }
 $tpl->assign('DRAFTS', $array_drafts);
