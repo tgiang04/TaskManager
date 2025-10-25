@@ -45,6 +45,7 @@ $global_config['autocheckupdate'] = 1;
 $global_config['autoupdatetime'] = 24;
 $global_config['blank_operation'] = 1;
 $global_config['block_admin_ip'] = 0;
+$global_config['cache_prefix'] = '';
 $global_config['cached'] = 'files';
 $global_config['cdn_url'] = [];
 $global_config['check_zaloip_expired'] = 0;
