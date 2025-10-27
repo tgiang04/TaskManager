@@ -201,7 +201,8 @@ class FileCache extends Cache
         $cache_file = md5($sql) . '_' . $this->keySuffix . '.cache';
 
         if (($cache = $this->getItem($moduleName, $cache_file, $lang, $ttl)) !== false) {
-            return unserialize($cache);
+            $data = unserialize($cache);
+            return is_array($data) ? $data : [];
         }
 
         $list = parent::getList($sql, $key);
