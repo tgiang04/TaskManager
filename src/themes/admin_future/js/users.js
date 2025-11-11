@@ -1,5 +1,3 @@
-<?php
-
 /**
  * NukeViet Content Management System
  * @version 5.x
@@ -9,8 +7,14 @@
  * @see https://github.com/nukeviet The NukeViet CMS GitHub project
  */
 
-if (!defined('NV_MAINFILE')) {
-    define('NV_MAINFILE', true);
-}
+"use strict";
 
-require NV_ROOTDIR . '/includes/vendor/autoload.php';
+$(function () {
+    // Chép vào bộ nhớ tạm
+    $('.copy-btn').each(function () {
+        const clipboard = new ClipboardJS(this);
+        clipboard.on('success', function(e) {
+            nvToast($(e.trigger).data('success'), 'success');
+        });
+    });
+});

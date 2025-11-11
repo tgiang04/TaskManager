@@ -914,6 +914,19 @@ $lang_module['note_webview1'] = 'Vous ouvrez cette page dans une fenêtre WebVie
 $lang_module['note_webview2'] = 'Vous ouvrez cette page dans une fenêtre WebView. La connexion avec une clé d\'accès peut ne pas fonctionner correctement. Si vous souhaitez utiliser cette méthode au lieu du mot de passe, veuillez ouvrir cette page dans un navigateur pour continuer.';
 $lang_module['note_webview3'] = 'Vous ouvrez cette page dans une fenêtre WebView. La connexion via un tiers ci-dessous peut ne pas fonctionner correctement. Si vous souhaitez utiliser cette méthode au lieu du mot de passe, veuillez ouvrir cette page dans un navigateur pour continuer.';
 
+$lang_module['datadeletion'] = 'Suppression des données personnelles';
+$lang_module['datadeletion_title'] = 'Demande de suppression des données';
+$lang_module['datadeletion_text'] = 'Votre demande de suppression des données personnelles a été reçue et traitée avec succès';
+$lang_module['datadeletion_id'] = 'Code de demande';
+$lang_module['datadeletion_success'] = 'Traité';
+$lang_module['hold_deleted_username'] = 'Refuser la réinscription des noms de compte supprimés';
+$lang_module['hold_deleted_username_note'] = 'Après qu\'un utilisateur demande la suppression de ses données personnelles, son nom de connexion sera conservé et ne pourra pas être réinscrit pendant cette période, l\'unité est le nombre de jours de 1 à 999. Entrez 0 si vous souhaitez permettre la réinscription immédiatement, entrez 1000 si vous ne voulez pas permettre la réinscription de façon permanente';
+$lang_module['redirecturi_helper_title'] = 'Configuration de l\'URL de l\'application';
+$lang_module['redirecturi_helper_text'] = 'Copiez les URL ci-dessous pour les coller dans le tableau de bord de votre application sur les fournisseurs de services correspondants';
+$lang_module['redirecturi_helper_fb1'] = 'URI de redirection pour l\'application Facebook';
+$lang_module['redirecturi_helper_fb2'] = 'URL de rappel de suppression des données utilisateur pour Facebook';
+$lang_module['redirecturi_helper_gg'] = 'URI de redirection pour l\'ID client Google Oauth';
+
 $lang_module['merge_field_active_deadline'] = 'Temps écoulé pour actif';
 $lang_module['merge_field_link'] = 'Lien';
 $lang_module['mf_send_newvalue'] = 'Envoyer une nouvelle valeur par e-mail';
