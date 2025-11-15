@@ -926,6 +926,9 @@ $lang_module['redirecturi_helper_text'] = 'Copiez les URL ci-dessous pour les co
 $lang_module['redirecturi_helper_fb1'] = 'URI de redirection pour l\'application Facebook';
 $lang_module['redirecturi_helper_fb2'] = 'URL de rappel de suppression des données utilisateur pour Facebook';
 $lang_module['redirecturi_helper_gg'] = 'URI de redirection pour l\'ID client Google Oauth';
+$lang_module['account_waiting_activation'] = 'Votre compte est en attente d\'activation, veuillez vérifier votre e-mail dans la boîte de réception (y compris le dossier spam) et activer votre compte. Si vous ne trouvez toujours pas l\'e-mail, cliquez ici pour recevoir à nouveau l\'e-mail d\'activation.';
+$lang_module['account_waiting_oldpass'] = 'Utiliser le mot de passe précédent enregistré';
+$lang_module['lostactivelink_send_timeout'] = 'Vous avez envoyé la demande de récupération du lien à %s. Veuillez vérifier à nouveau votre e-mail ou réessayer après %s';
 
 $lang_module['merge_field_active_deadline'] = 'Temps écoulé pour actif';
 $lang_module['merge_field_link'] = 'Lien';

@@ -293,6 +293,8 @@ function login_validForm(a) {
                 }
 
                 $('.loginstep1, .loginstep2, .loginCaptcha', a).toggleClass('hidden');
+            } else if (d.status == 'activation') {
+                $(".nv-info", a).html("<a href=\"" + d.input + "\">" + d.mess + "</a>").removeClass("error").removeClass("success").addClass("info").show();
             }
         }
     });

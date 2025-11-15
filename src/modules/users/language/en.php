@@ -926,6 +926,9 @@ $lang_module['redirecturi_helper_text'] = 'Copy the URLs below to paste into you
 $lang_module['redirecturi_helper_fb1'] = 'Redirect URI for Facebook App';
 $lang_module['redirecturi_helper_fb2'] = 'User data deletion callback URL for Facebook';
 $lang_module['redirecturi_helper_gg'] = 'Redirect URI for Google Oauth Client ID';
+$lang_module['account_waiting_activation'] = 'Your account is waiting for activation, please check your email in inbox (including spam folder) and activate your account. If you still cannot find the email, click here to receive the activation email again.';
+$lang_module['account_waiting_oldpass'] = 'Use the previously registered password';
+$lang_module['lostactivelink_send_timeout'] = 'You sent a request to get the link back at %s. Please check your email again or try again after %s';
 
 $lang_module['merge_field_active_deadline'] = 'Expired time for active';
 $lang_module['merge_field_link'] = 'Link';

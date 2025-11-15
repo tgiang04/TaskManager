@@ -248,6 +248,7 @@ $sql_create_module[] = 'CREATE TABLE IF NOT EXISTS ' . $db_config['prefix'] . '_
     users_info text,
     openid_info text,
     idsite mediumint(8) unsigned NOT NULL DEFAULT '0',
+    lostactivelink int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời điểm gửi email kích hoạt lại tài khoản lần trước',
     PRIMARY KEY (userid),
     UNIQUE KEY login (username),
     UNIQUE KEY md5username (md5username),

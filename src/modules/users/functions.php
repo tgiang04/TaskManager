@@ -440,9 +440,10 @@ function opidr_login($openid_info)
  *
  * @param string $type
  * @param string $name
- * @return mixed
+ * @param bool $reg
+ * @return false|array
  */
-function checkLoginName($type, $name)
+function checkLoginName($type, $name, $reg = false): false|array
 {
     global $db;
 
@@ -453,7 +454,8 @@ function checkLoginName($type, $name)
         $where = 'md5username =' . $db->quote(nv_md5safe($name));
     }
 
-    $row = $db->query('SELECT * FROM ' . NV_MOD_TABLE . ' WHERE ' . $where)->fetch();
+    $table = $reg ? (NV_MOD_TABLE . '_reg') : NV_MOD_TABLE;
+    $row = $db->query('SELECT * FROM ' . $table . ' WHERE ' . $where)->fetch();
     if (empty($row[$type])) {
         return false;
     }
