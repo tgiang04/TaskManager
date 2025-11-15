@@ -206,7 +206,7 @@ if ($checkss == $data['checkss']) {
                             }
 
                             $contents = user_info_exit($info);
-                            $contents .= '<meta http-equiv="refresh" content="5;url=' . nv_url_rewrite($url, true) . '" />';
+                            $contents .= '<meta http-equiv="refresh" content="30;url=' . nv_url_rewrite($url, true) . '" />';
 
                             include NV_ROOTDIR . '/includes/header.php';
                             echo nv_site_theme($contents);

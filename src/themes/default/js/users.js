@@ -354,7 +354,7 @@ function reg_validForm(a) {
                     scrollTop: $(".nv-info", a).offset().top
                 }, 800), $(".form-detail", a).hide(), setTimeout(function() {
                     window.location.href = "" != b.input ? b.input : window.location.href
-                }, 6E3))
+                }, 30000))
             }
         },
         error: function(b, d, f) {

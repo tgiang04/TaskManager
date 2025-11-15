@@ -618,6 +618,23 @@ function user_lostpass($data)
     $xtpl->assign('DATA', $data);
     $xtpl->assign('FORM_ACTION', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=lostpass');
 
+    $password_rule = empty($global_config['nv_upass_type']) ? $nv_Lang->getGlobal('password_rule_nolimit', $global_config['nv_upassmin'], $global_config['nv_upassmax']) : $nv_Lang->getGlobal('password_rule_limit', $nv_Lang->getGlobal('upass_type_' . $global_config['nv_upass_type']), $global_config['nv_upassmin'], $global_config['nv_upassmax']);
+    $password_pattern = '/^';
+    if ($global_config['nv_upass_type'] == 1) {
+        $password_pattern .= "(?=.*[a-zA-Z])(?=.*\d)";
+    } elseif ($global_config['nv_upass_type'] == 2) {
+        $password_pattern .= "(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W\_])";
+    } elseif ($global_config['nv_upass_type'] == 3) {
+        $password_pattern .= "(?=.*[a-z])(?=.*[A-Z])(?=.*\d)";
+    } elseif ($global_config['nv_upass_type'] == 4) {
+        $password_pattern .= "(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W\_])";
+    }
+    $password_pattern .= '(.){' . $global_config['nv_upassmin'] . ',' . $global_config['nv_upassmax'] . '}$/';
+
+    $xtpl->assign('PASSWORD_PATTERN', $password_pattern);
+    $xtpl->assign('PASSWORD_RULE', $password_rule);
+    $xtpl->assign('PASS_MAXLENGTH', $global_config['nv_upassmax']);
+
     $array_gfx_chk = !empty($global_config['captcha_area']) ? explode(',', $global_config['captcha_area']) : [];
 
     if (!empty($array_gfx_chk) and in_array('p', $array_gfx_chk, true)) {
