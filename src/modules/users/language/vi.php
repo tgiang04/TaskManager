@@ -178,7 +178,7 @@ $lang_module['step2'] = 'Bước 2';
 $lang_module['lostactivelink_question_empty'] = 'Câu hỏi bảo mật hoặc câu trả lời chưa được khai báo khi đăng ký tài khoản nên chúng tôi không đủ cơ sở để cung cấp link kích hoạt mới cho bạn. Hãy liên hệ với quản trị site để biết thêm chi tiết';
 $lang_module['lostactivelink_no_info1'] = 'Bạn chưa khai báo tên đăng nhập hoặc e-mail';
 $lang_module['lostactivelink_no_info2'] = 'Không tìm thấy tài khoản phù hợp với thông tin mà bạn vừa khai báo';
-$lang_module['lostactivelink_send'] = 'Link kích hoạt tài khoản đã được gửi đến email %s. Nếu không thấy trong hộp thư đến, vui lòng kiểm tra thư mục spam';
+$lang_module['lostactivelink_send'] = 'Link kích hoạt tài khoản đã được gửi đến email %s. Nếu không thấy thư, hãy kiểm tra trong mục Thư rác (Spam)';
 $lang_module['lostactivelink_submit'] = 'Gửi yêu cầu';
 $lang_module['resend_activelink'] = 'Đã đăng ký nhưng không nhận được link kích hoạt?';
 $lang_module['change_question_ok'] = 'câu hỏi bảo mật và câu trả lời đã được thay đổi';
@@ -928,7 +928,7 @@ $lang_module['redirecturi_helper_fb2'] = 'URL gọi lại xóa dữ liệu ngư�
 $lang_module['redirecturi_helper_gg'] = 'URI chuyển hướng cho Google Oauth Client ID';
 $lang_module['account_waiting_activation'] = 'Tài khoản của bạn đang chờ kích hoạt, vui lòng kiểm tra email trong hộp thư đến (cả hộp thư rác) và kích hoạt tài khoản. Nếu bạn vẫn không tìm thấy email, hãy click vào đây để nhận lại email kích hoạt.';
 $lang_module['account_waiting_oldpass'] = 'Sử dụng mật khẩu trước đó đã đăng ký';
-$lang_module['lostactivelink_send_timeout'] = 'Bạn đã gửi yêu cầu lấy lại liên kết lúc %s. Vui lòng kiểm tra lại email hoặc thử lại sau thời điểm %s';
+$lang_module['lostactivelink_send_timeout'] = 'Bạn đã gửi yêu cầu lấy lại liên kết lúc %s. Vui lòng kiểm tra lại email hoặc thử lại sau thời điểm %s. Nếu không thấy thư, hãy kiểm tra trong mục Thư rác (Spam)';
 
 $lang_module['merge_field_active_deadline'] = 'Hạn hiệu lực kích hoạt';
 $lang_module['merge_field_link'] = 'Liên kết';

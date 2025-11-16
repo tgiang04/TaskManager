@@ -291,6 +291,7 @@ if ($checkss == $array_register['checkss']) {
     }
 
     if (!defined('ACCESS_ADDUS') and ($global_config['allowuserreg'] == 2 or $global_config['allowuserreg'] == 3)) {
+        // Kích hoạt qua email hoặc nguời quản trị kích hoạt
         $sql = 'INSERT INTO ' . NV_MOD_TABLE . '_reg (
             username, md5username, password, email, first_name, last_name, gender, birthday, sig, regdate, question, answer, checknum, users_info, idsite
         ) VALUES (
@@ -378,7 +379,8 @@ if ($checkss == $array_register['checkss']) {
             $array = [
                 'status' => 'ok',
                 'input' => nv_url_rewrite(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name, true),
-                'mess' => $info
+                'mess' => $info,
+                'timeout' => 0
             ];
             if (defined('SSO_REGISTER_SECRET')) {
                 $sso_redirect_users = $nv_Request->get_title('sso_redirect_' . $module_data, 'session', '');
@@ -390,6 +392,7 @@ if ($checkss == $array_register['checkss']) {
             nv_jsonOutput($array);
         }
     } else {
+        // Không cần kích hoạt
         $sql = 'INSERT INTO ' . NV_MOD_TABLE . ' (
             group_id, username, md5username, password, email, first_name, last_name, gender, photo, birthday, sig, regdate,
             question, answer, passlostkey, view_mail, remember, in_groups,

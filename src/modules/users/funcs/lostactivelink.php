@@ -196,17 +196,7 @@ if ($checkss == $data['checkss']) {
                                 $info = $nv_Lang->getModule('lostactivelink_send_timeout', nv_datetime_format($row['lostactivelink'], 1), nv_datetime_format($row['lostactivelink'] + 600, 1));
                             }
 
-                            $url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name;
-                            if ($data['autosubmit']) {
-                                // Quay trở lại trang đăng nhập với chuyển hướng ban đầu
-                                $url .= '&amp;' . NV_OP_VARIABLE . '=login';
-                                if (!empty($nv_redirect)) {
-                                    $url .= '&amp;nv_redirect=' . $nv_redirect;
-                                }
-                            }
-
                             $contents = user_info_exit($info);
-                            $contents .= '<meta http-equiv="refresh" content="30;url=' . nv_url_rewrite($url, true) . '" />';
 
                             include NV_ROOTDIR . '/includes/header.php';
                             echo nv_site_theme($contents);

@@ -178,7 +178,7 @@ $lang_module['step2'] = 'Step 2';
 $lang_module['lostactivelink_question_empty'] = 'You doesn\'t specify security question or answer. We can\'t provide new activate link for you. Please contact site admin for more information';
 $lang_module['lostactivelink_no_info1'] = 'Empty user name or email';
 $lang_module['lostactivelink_no_info2'] = 'Can\'t find account match your provided information';
-$lang_module['lostactivelink_send'] = 'Activate link sent to email %s';
+$lang_module['lostactivelink_send'] = 'Activate link sent to email %s. If you don’t see the email, please check your Spam or Junk folder';
 $lang_module['lostactivelink_submit'] = 'Submit';
 $lang_module['resend_activelink'] = 'Not receive activate link after registered';
 $lang_module['change_question_ok'] = 'Reserve question was changed';
@@ -928,7 +928,7 @@ $lang_module['redirecturi_helper_fb2'] = 'User data deletion callback URL for Fa
 $lang_module['redirecturi_helper_gg'] = 'Redirect URI for Google Oauth Client ID';
 $lang_module['account_waiting_activation'] = 'Your account is waiting for activation, please check your email in inbox (including spam folder) and activate your account. If you still cannot find the email, click here to receive the activation email again.';
 $lang_module['account_waiting_oldpass'] = 'Use the previously registered password';
-$lang_module['lostactivelink_send_timeout'] = 'You sent a request to get the link back at %s. Please check your email again or try again after %s';
+$lang_module['lostactivelink_send_timeout'] = 'You sent a request to get the link back at %s. Please check your email again or try again after %s. If you do not see the email in your inbox, please check your your Spam or Junk folder';
 
 $lang_module['merge_field_active_deadline'] = 'Expired time for active';
 $lang_module['merge_field_link'] = 'Link';

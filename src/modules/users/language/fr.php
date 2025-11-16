@@ -178,7 +178,7 @@ $lang_module['step2'] = 'Étape 2';
 $lang_module['lostactivelink_question_empty'] = 'La question secrète ou la réponse n\'a pas été fourni lors de l\'inscription. Donc, il nous est impossible de vous donner un nouveau lien d\'activation. Merci de contacter l\'administrateur';
 $lang_module['lostactivelink_no_info1'] = 'Erreur: manque d\'identifiant ou de mail';
 $lang_module['lostactivelink_no_info2'] = 'Impossible de trouver le compte correspondant à votre demande';
-$lang_module['lostactivelink_send'] = 'Lien d\'activation du compte est envoyé à votre mail %s,  si vous ne le trouvez pas dans la boite de mail arrivé, le cherchez dans le dossier Spam';
+$lang_module['lostactivelink_send'] = 'Lien d\'activation du compte est envoyé à votre mail %s. Si vous ne trouvez pas l\'e-mail dans votre boîte de réception, veuillez vérifier votre dossier Spam ou Courrier indésirable';
 $lang_module['lostactivelink_submit'] = 'Soumettre';
 $lang_module['resend_activelink'] = 'Ré-envoyer le lien d\'activation.';
 $lang_module['change_question_ok'] = 'Changement réussi de question/ réponse secrète';
@@ -928,7 +928,7 @@ $lang_module['redirecturi_helper_fb2'] = 'URL de rappel de suppression des donn�
 $lang_module['redirecturi_helper_gg'] = 'URI de redirection pour l\'ID client Google Oauth';
 $lang_module['account_waiting_activation'] = 'Votre compte est en attente d\'activation, veuillez vérifier votre e-mail dans la boîte de réception (y compris le dossier spam) et activer votre compte. Si vous ne trouvez toujours pas l\'e-mail, cliquez ici pour recevoir à nouveau l\'e-mail d\'activation.';
 $lang_module['account_waiting_oldpass'] = 'Utiliser le mot de passe précédent enregistré';
-$lang_module['lostactivelink_send_timeout'] = 'Vous avez envoyé la demande de récupération du lien à %s. Veuillez vérifier à nouveau votre e-mail ou réessayer après %s';
+$lang_module['lostactivelink_send_timeout'] = 'Vous avez envoyé la demande de récupération du lien à %s. Veuillez vérifier à nouveau votre e-mail ou réessayer après %s. Si vous ne trouvez pas l\'e-mail dans votre boîte de réception, veuillez vérifier votre dossier Spam ou Courrier indésirable';
 
 $lang_module['merge_field_active_deadline'] = 'Temps écoulé pour actif';
 $lang_module['merge_field_link'] = 'Lien';

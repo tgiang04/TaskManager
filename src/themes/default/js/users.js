@@ -335,6 +335,8 @@ function reg_validForm(a) {
         dataType: "json",
         success: function(b) {
             formChangeCaptcha(a);
+            if (typeof b.timeout == "undefined") b.timeout = 6000;
+
             if ("error" == b.status) {
                 $("input,button,select,textarea", a).prop("disabled", !1);
                 $(".tooltip-current", a).removeClass("tooltip-current");
@@ -343,19 +345,32 @@ function reg_validForm(a) {
                     validErrorShow(this)
                 }): ($(".nv-info", a).html(b.mess).addClass("error").show(), $("html, body").animate({
                     scrollTop: $(".nv-info", a).offset().top
-                }, 800))
-            } else {
-                $(".nv-info", a).html(b.mess + '<span class="load-bar"></span>').removeClass("error").addClass("success").show();
-                "ok" == b.input ? setTimeout(function() {
+                }, 800));
+                return;
+            }
+
+            $(".nv-info", a).html(b.mess + (b.timeout > 0 ? '<span class="load-bar"></span>' : '')).removeClass("error").addClass("success").show();
+
+            if ("ok" == b.input) {
+                setTimeout(function() {
                     $(".nv-info", a).fadeOut();
                     $("input,button,select,textarea", a).prop("disabled", !1);
                     $("[onclick*=validReset]", a).click()
-                }, 6E3) : ($("html, body").animate({
-                    scrollTop: $(".nv-info", a).offset().top
-                }, 800), $(".form-detail", a).hide(), setTimeout(function() {
-                    window.location.href = "" != b.input ? b.input : window.location.href
-                }, 30000))
+                }, b.timeout);
+                return;
             }
+
+            $(".form-detail", a).hide();
+            $("html, body").animate({
+                scrollTop: $(".nv-info", a).offset().top
+            }, 800);
+            b.timeout > 0 && setTimeout(function() {
+                if ("" != b.input) {
+                    window.location.href = b.input;
+                    return;
+                }
+                location.reload();
+            }, b.timeout);
         },
         error: function(b, d, f) {
             window.console.log ? console.log(b.status + ": " + f) : alert(b.status + ": " + f)
