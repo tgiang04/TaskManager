@@ -63,6 +63,8 @@ $install_lang['modfuncs']['users']['groups'] = 'Group management';
 $install_lang['modfuncs']['users']['datadeletion'] = 'Personal data deletion';
 $install_lang['modfuncs']['users']['main'] = 'Account homepage';
 $install_lang['modfuncs']['users']['avatar'] = 'Change avatar';
+$install_lang['modfuncs']['users']['security-privacy'] = 'Security and Privacy';
+$install_lang['modfuncs']['users']['verify-password'] = 'Verify Password';
 
 $install_lang['modfuncs']['statistics'] = [];
 $install_lang['modfuncs']['statistics']['allreferers'] = 'By referrers';
@@ -110,6 +112,7 @@ $install_lang['cron']['cron_notification_autodel'] = 'Delete old notification';
 $install_lang['cron']['cron_remove_expired_inform'] = 'Remove expired notifications';
 $install_lang['cron']['cron_apilogs_autodel'] = 'Remove expired API-logs';
 $install_lang['cron']['cron_expadmin_handling'] = 'Handling expired admins';
+$install_lang['cron']['cron_user_datadeletion_handling'] = 'Handling scheduled user data deletion';
 
 $install_lang['groups']['NukeViet-Fans'] = 'NukeViet-Fans';
 $install_lang['groups']['NukeViet-Admins'] = 'NukeViet-Admins';

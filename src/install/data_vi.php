@@ -63,6 +63,8 @@ $install_lang['modfuncs']['users']['groups'] = 'Quản lý nhóm';
 $install_lang['modfuncs']['users']['datadeletion'] = 'Xóa dữ liệu cá nhân';
 $install_lang['modfuncs']['users']['main'] = 'Trang chủ tài khoản';
 $install_lang['modfuncs']['users']['avatar'] = 'Đổi ảnh đại diện';
+$install_lang['modfuncs']['users']['security-privacy'] = 'Bảo mật và Quyền riêng tư';
+$install_lang['modfuncs']['users']['verify-password'] = 'Xác minh mật khẩu';
 
 $install_lang['modfuncs']['statistics'] = [];
 $install_lang['modfuncs']['statistics']['allreferers'] = 'Theo đường dẫn đến site';
@@ -110,6 +112,7 @@ $install_lang['cron']['cron_notification_autodel'] = 'Xóa thông báo cũ';
 $install_lang['cron']['cron_remove_expired_inform'] = 'Xóa thông báo quá hạn';
 $install_lang['cron']['cron_apilogs_autodel'] = 'Xóa các API-log hết hạn';
 $install_lang['cron']['cron_expadmin_handling'] = 'Xử lý admin quá hạn';
+$install_lang['cron']['cron_user_datadeletion_handling'] = 'Xóa dữ liệu người dùng đã lên lịch';
 
 $install_lang['groups']['NukeViet-Fans'] = 'Người hâm mộ';
 $install_lang['groups']['NukeViet-Admins'] = 'Người quản lý';

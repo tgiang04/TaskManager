@@ -146,6 +146,7 @@ $sql_create_module[] = 'CREATE TABLE IF NOT EXISTS ' . $db_config['prefix'] . '_
     email_verification_time INT(11) NOT NULL DEFAULT '-1' COMMENT '-3: Tài khoản sys, -2: Admin kích hoạt, -1 không cần kích hoạt, 0: Chưa xác minh, > 0 thời gian xác minh',
     active_obj varchar(50) NOT NULL DEFAULT 'SYSTEM' COMMENT 'SYSTEM, EMAIL, OAUTH:xxxx, quản trị kích hoạt thì lưu userid',
     language char(2) NOT NULL DEFAULT '' COMMENT 'Ngôn ngữ giao diện',
+    delete_at int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời điểm xóa tài khoản đã lên lịch',
     PRIMARY KEY (userid),
     UNIQUE KEY username (username),
     UNIQUE KEY md5username (md5username),
@@ -315,6 +316,7 @@ $sql_create_module[] = 'CREATE TABLE IF NOT EXISTS ' . $db_config['prefix'] . '_
 $sql_create_module[] = 'CREATE TABLE IF NOT EXISTS ' . $db_config['prefix'] . '_' . $module_data . "_info (
     userid mediumint(8) unsigned NOT NULL,
     inform CHAR(30) NOT NULL DEFAULT '',
+    deletion_checkcode varchar(25) NOT NULL DEFAULT '' COMMENT 'Mã xác nhận yêu cầu xóa dữ liệu cá nhân',
     PRIMARY KEY (userid)
 ) ENGINE=MyISAM";
 
@@ -327,6 +329,7 @@ $sql_create_module[] = 'CREATE TABLE IF NOT EXISTS ' . $db_config['prefix'] . '_
 ) ENGINE=MyISAM";
 
 $sql_create_module[] = 'CREATE TABLE IF NOT EXISTS ' . $db_config['prefix'] . '_' . $module_data . "_login (
+    id int(11) unsigned NOT NULL AUTO_INCREMENT,
     userid mediumint(8) unsigned NOT NULL,
     clid char(32) NOT NULL,
     logtime int(11) unsigned NOT NULL,
@@ -334,22 +337,26 @@ $sql_create_module[] = 'CREATE TABLE IF NOT EXISTS ' . $db_config['prefix'] . '_
     agent varchar(255) NOT NULL,
     ip char(50) NOT NULL,
     mode_extra varchar(255) NOT NULL DEFAULT '',
+    PRIMARY KEY (id),
     UNIQUE KEY userid (userid, clid)
 ) ENGINE=MyISAM";
 
 $sql_create_module[] = 'CREATE TABLE IF NOT EXISTS ' . $db_config['prefix'] . '_' . $module_data . "_deleted (
+    id int(11) unsigned NOT NULL AUTO_INCREMENT,
     userid mediumint(8) unsigned NOT NULL,
-    md5username varchar(32) NOT NULL DEFAULT '',
-    md5email varchar(32) NOT NULL DEFAULT '',
-    request_source varchar(50) NOT NULL DEFAULT '' COMMENT 'Nguồn yêu cầu ví dụ facebook',
-    opid char(50) NOT NULL DEFAULT '',
-    confirmation_code varchar(36) NOT NULL DEFAULT '',
+    request_source varchar(50) NOT NULL DEFAULT '' COMMENT 'Nguồn yêu cầu ví dụ facebook, rỗng là thành viên tự yêu cầu',
     request_time int(11) unsigned NOT NULL COMMENT 'Thời điểm nhận yêu cầu',
+    uniqid varchar(25) NOT NULL DEFAULT '' COMMENT 'Mã phục vụ xử lý',
+    md5username varchar(32) NOT NULL DEFAULT '' COMMENT 'MD5 của username tại thời điểm xóa nếu xóa cả tài khoản',
+    md5email varchar(32) NOT NULL DEFAULT '' COMMENT 'MD5 của email tại thời điểm xóa nếu xóa cả tài khoản',
+    opid char(50) NOT NULL DEFAULT '' COMMENT 'ID bên nguồn yêu cầu',
+    confirmation_code varchar(36) NOT NULL DEFAULT '' COMMENT 'Mã xác nhận yêu cầu xóa dữ liệu cá nhân, UUIDv4 application tự sinh',
     issued_at int(11) unsigned NOT NULL COMMENT 'Thời điểm yêu cầu bên nguồn',
-    PRIMARY KEY (userid),
-    UNIQUE KEY openid (request_source, opid),
-    UNIQUE KEY confirmation_code (confirmation_code),
+    status int(11) NOT NULL DEFAULT '0' COMMENT 'Trạng thái xử lý: 0: Chưa xử lý, 1: Đang xử lý, -time: lỗi, +time: thời gian hoàn thành',
+    PRIMARY KEY (id),
+    KEY idx_userid_request_source (userid, request_source),
     KEY request_time (request_time),
+    KEY uniqid (uniqid),
     KEY md5username (md5username)
 ) ENGINE=MyISAM COMMENT 'Lưu trữ thông tin thành viên đã yêu cầu xóa dữ liệu cá nhân'";
 
