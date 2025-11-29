@@ -727,6 +727,8 @@ $(function() {
                             }
                             if ($('.invalid-feedback', pr).length) {
                                 $('.invalid-feedback', pr).html(a.mess);
+                            } else if ($('.invalid-tooltip', pr).length) {
+                                $('.invalid-tooltip', pr).html(a.mess);
                             } else {
                                 nvToast(a.mess, 'error');
                             }
