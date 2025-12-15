@@ -39,14 +39,14 @@ figure.table table {
   border-spacing: 0;
   width: 100%;
   height: 100%;
-  border: 1px double var(--bs-border-color);
+  border: 1px double var(--#{$prefix}border-color);
 }
 
 figure.table table td,
 figure.table table th {
   min-width: 5px;
   padding: 7px;
-  border: 1px solid var(--bs-border-color);
+  border: 1px solid var(--#{$prefix}border-color);
 }
 
 figure.table table th {
@@ -267,22 +267,22 @@ p+.image-style-side {
   --ck-content-line-height: var(--#{$prefix}body-line-height);
 
   --ck-color-base-foreground: var(--nv-body-bg); // Màu nền window ở chế độ fullscreen
-  --ck-color-base-background: var(--bs-body-bg); // Nền ở chế độ thường
-  --ck-color-base-border: var(--bs-border-color); // Viền cơ bản ví dụ toàn bộ khung viền của trình soạn thảo
+  --ck-color-base-background: var(--#{$prefix}body-bg); // Nền ở chế độ thường
+  --ck-color-base-border: var(--#{$prefix}border-color); // Viền cơ bản ví dụ toàn bộ khung viền của trình soạn thảo
   --ck-color-focus-border: #{$input-focus-border-color}; // Viền khi focus
   --ck-focus-ring: 1px solid #{$input-focus-border-color}; // Viền khi focus
-  --ck-color-text: var(--bs-body-color); // Màu chữ
+  --ck-color-text: var(--#{$prefix}body-color); // Màu chữ
 
   // Nút single
-  --ck-color-button-default-hover-background: var(--bs-tertiary-bg);
-	--ck-color-button-default-active-background: var(--bs-secondary-bg);
-	--ck-color-button-default-active-shadow: var(--bs-secondary-bg-subtle);
+  --ck-color-button-default-hover-background: var(--#{$prefix}tertiary-bg);
+	--ck-color-button-default-active-background: var(--#{$prefix}secondary-bg);
+	--ck-color-button-default-active-shadow: var(--#{$prefix}secondary-bg-subtle);
 
   // Nút single được active
-	--ck-color-button-on-background: var(--bs-secondary-bg);
-	--ck-color-button-on-hover-background: var(--bs-secondary-bg-subtle);
-	--ck-color-button-on-active-background: var(--bs-secondary-bg-subtle);
-	--ck-color-button-on-active-shadow: var(--bs-secondary-bg);
+	--ck-color-button-on-background: var(--#{$prefix}secondary-bg);
+	--ck-color-button-on-hover-background: var(--#{$prefix}secondary-bg-subtle);
+	--ck-color-button-on-active-background: var(--#{$prefix}secondary-bg-subtle);
+	--ck-color-button-on-active-shadow: var(--#{$prefix}secondary-bg);
 	--ck-color-button-on-disabled-background: var(--nv-body-bg);
 
   // Menu dropdown
@@ -294,7 +294,7 @@ p+.image-style-side {
   --ck-color-panel-border: var(--ck-color-base-border);
 
   // Dialog
-  --ck-color-dialog-form-header-border: var(--bs-border-color);
+  --ck-color-dialog-form-header-border: var(--#{$prefix}border-color);
   --ck-color-dialog-background: var(--ck-color-base-background);
 
   // Thuộc tính nút split button
@@ -305,7 +305,7 @@ p+.image-style-side {
   --ck-color-toolbar-border: var(--ck-color-base-border);
   --ck-color-toolbar-background: var(--ck-color-base-background);
 
-  --ck-color-focus-outer-shadow: var(--bs-focus-ring-color);
+  --ck-color-focus-outer-shadow: var(--#{$prefix}focus-ring-color);
   --ck-focus-outer-shadow-geometry: 0 0 0 3px;
   --ck-focus-outer-shadow: var(--ck-focus-outer-shadow-geometry) var(--ck-color-focus-outer-shadow);
 
@@ -320,17 +320,17 @@ p+.image-style-side {
   --ck-color-labeled-field-label-background: var(--ck-color-base-background);
 
   // Link
-  --ck-color-link-default: var(--bs-link-color);
+  --ck-color-link-default: var(--#{$prefix}link-color);
 }
 
 // Dark mode
-[data-bs-theme="dark"],
+[data-#{$prefix}theme="dark"],
 [data-theme="dark"] {
   // CKEditor5 chưa có chỗ nào định nghĩa biến này trên v47.0.0
   .ck-fullscreen__main-wrapper {
     .ck-fullscreen__editable {
       .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
-        background-color: var(--bs-body-bg);
+        background-color: var(--#{$prefix}body-bg);
       }
     }
   }
