@@ -51,17 +51,16 @@ function commLike(cid, checkss, like) {
 }
 
 function commentDelete(cid, checkss) {
-    if (confirm(nv_is_del_confirm[0])) {
-        $.post(nv_base_siteurl + 'index.php?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=comment&' + nv_fc_variable + '=delete&nocache=' + new Date().getTime(), 'cid=' + cid + '&checkss=' + checkss, function(res) {
-            var rs = res.split('_');
-            if (rs[0] == 'OK') {
-                var data = $('#idcomment').data();
-                $("#showcomment").load(nv_base_siteurl + 'index.php?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=comment&module=' + data.module + '&area=' + data.area + '&id=' + data.id + '&allowed=' + data.allowed + '&checkss=' + data.checkss + '&comment_load=1&nocache=' + new Date().getTime());
-            } else if (rs[0] == 'ERR') {
-                alert(rs[1]);
-            }
-        });
+    if (!confirm(nv_is_del_confirm[0])) {
+        return;
     }
+    $.post(nv_base_siteurl + 'index.php?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=comment&' + nv_fc_variable + '=delete&nocache=' + new Date().getTime(), 'cid=' + cid + '&checkss=' + checkss, function(res) {
+        if (res.status != 'success') {
+            return nukeviet.toast(res.mess, 'error');
+        }
+        const data = $('#idcomment').data();
+        $("#showcomment").load(nv_base_siteurl + 'index.php?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=comment&module=' + data.module + '&area=' + data.area + '&id=' + data.id + '&allowed=' + data.allowed + '&checkss=' + data.checkss + '&comment_load=1&nocache=' + new Date().getTime());
+    });
 }
 
 /**
