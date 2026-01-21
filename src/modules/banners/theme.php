@@ -130,7 +130,6 @@ function nv_banner_theme_stats($ads)
     $xtpl = new XTemplate('stats.tpl', get_module_tpl_dir('stats.tpl'));
     $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
     $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
-    $xtpl->assign('ASSETS_STATIC_URL', ASSETS_STATIC_URL);
     $xtpl->assign('MANAGEMENT', $manament);
     $xtpl->parse('main.management');
 
@@ -147,6 +146,5 @@ function nv_banner_theme_stats($ads)
     }
 
     $xtpl->parse('main');
-
     return $xtpl->text('main');
 }

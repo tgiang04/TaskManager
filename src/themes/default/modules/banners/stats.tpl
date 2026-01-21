@@ -9,7 +9,7 @@
 </ul>
 <!-- END: management -->
 <div class="row m-bottom">
-    <div class="col-xs-24 col-sm-10 m-bottom">
+    <div class="col-xs-24 col-sm-12 col-md-10 m-bottom">
         <select class="form-control" id="adsstat-ads" data-toggle="loadStat">
             <option value="">{LANG.stats_views_ads}</option>
             <!-- BEGIN: ads -->
@@ -18,7 +18,7 @@
         </select>
     </div>
 
-    <div class="col-xs-24 col-sm-6 m-bottom">
+    <div class="col-xs-24 col-sm-12 col-md-6 m-bottom">
         <select class="form-control" id="adsstat-month" data-toggle="loadStat">
             <option value="">{LANG.stats_views_month}</option>
             <!-- BEGIN: month -->
@@ -31,7 +31,7 @@
 <div class="panel panel-primary m-bottom" id="stat-summary" style="display:none">
     <div class="panel-body">
         <div class="text-uppercase small text-muted">{LANG.hits_total}</div>
-        <div class="h2" id="total-clicks">0</div>
+        <div class="h1" id="total-clicks">0</div>
     </div>
 </div>
 
@@ -43,9 +43,9 @@
     <div class="row">
         <div class="col-xs-24 m-bottom">
             <div class="panel panel-default">
-                <div class="panel-heading">{LANG.stats_type_date}</div>
+                <div class="panel-heading"><strong>{LANG.stats_type_date}</strong></div>
                 <div class="panel-body">
-                    <div id="chart-date"></div>
+                    <div id="chart-date" data-empty-mess="{LANG.chart_data_empty}"></div>
                 </div>
             </div>
         </div>
@@ -53,17 +53,17 @@
     <div class="row">
         <div class="col-xs-24 col-md-12 m-bottom">
             <div class="panel panel-default">
-                <div class="panel-heading">{LANG.stats_type_country}</div>
+                <div class="panel-heading"><strong>{LANG.stats_type_browser}</strong></div>
                 <div class="panel-body">
-                    <div id="chart-country"></div>
+                    <div id="chart-browser" data-empty-mess="{LANG.chart_data_empty}"></div>
                 </div>
             </div>
         </div>
         <div class="col-xs-24 col-md-12 m-bottom">
             <div class="panel panel-default">
-                <div class="panel-heading">{LANG.stats_type_os}</div>
+                <div class="panel-heading"><strong>{LANG.stats_type_os}</strong></div>
                 <div class="panel-body">
-                    <div id="chart-os"></div>
+                    <div id="chart-os" data-empty-mess="{LANG.chart_data_empty}"></div>
                 </div>
             </div>
         </div>
@@ -71,9 +71,9 @@
     <div class="row">
         <div class="col-xs-24 m-bottom">
             <div class="panel panel-default">
-                <div class="panel-heading">{LANG.stats_type_browser}</div>
+                <div class="panel-heading"><strong>{LANG.stats_type_country}</strong></div>
                 <div class="panel-body">
-                    <div id="chart-browser"></div>
+                    <div id="chart-country" data-empty-mess="{LANG.chart_data_empty}"></div>
                 </div>
             </div>
         </div>
