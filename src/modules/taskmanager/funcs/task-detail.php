@@ -38,7 +38,7 @@ if ($nv_Request->isset_request('add_comment', 'post')) {
     $parent_id = $nv_Request->get_int('parent_id', 'post', 0);
     
     if (!empty($content)) {
-        $sql = "INSERT INTO " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_comments 
+        $sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_comments 
                 (task_id, user_id, parent_id, content, created_time, updated_time) 
                 VALUES (" . $id . ", " . $user_info['userid'] . ", " . $parent_id . ", :content, " . NV_CURRENTTIME . ", " . NV_CURRENTTIME . ")";
         
@@ -69,7 +69,7 @@ if ($nv_Request->isset_request('update_status', 'post')) {
     if (!empty($status)) {
         $old_status = $task['status'];
         
-        $sql = "UPDATE " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks 
+        $sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_tasks 
                 SET status = :status, updated_time = " . NV_CURRENTTIME . " 
                 WHERE id = " . $id;
         
@@ -105,7 +105,7 @@ if ($nv_Request->isset_request('update_progress', 'post')) {
     
     $old_progress = $task['progress'];
     
-    $sql = "UPDATE " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks 
+    $sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_tasks 
             SET progress = " . $progress . ", updated_time = " . NV_CURRENTTIME . " 
             WHERE id = " . $id;
     
@@ -128,7 +128,7 @@ if ($nv_Request->isset_request('update_progress', 'post')) {
 // Lấy danh sách bình luận
 $comments = [];
 $sql = "SELECT c.*, u.username, u.first_name, u.last_name 
-        FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_comments c
+        FROM " . NV_PREFIXLANG . "_" . $module_data . "_comments c
         LEFT JOIN " . NV_USERS_GLOBALTABLE . " u ON c.user_id = u.userid
         WHERE c.task_id = " . $id . "
         ORDER BY c.created_time ASC";
@@ -141,7 +141,7 @@ while ($row = $result->fetch()) {
 // Lấy danh sách file đính kèm
 $attachments = [];
 $sql = "SELECT a.*, u.username 
-        FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_attachments a
+        FROM " . NV_PREFIXLANG . "_" . $module_data . "_attachments a
         LEFT JOIN " . NV_USERS_GLOBALTABLE . " u ON a.uploaded_by = u.userid
         WHERE a.task_id = " . $id . "
         ORDER BY a.uploaded_time DESC";
@@ -154,7 +154,7 @@ while ($row = $result->fetch()) {
 // Lấy lịch sử thay đổi
 $history = [];
 $sql = "SELECT h.*, u.username 
-        FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_history h
+        FROM " . NV_PREFIXLANG . "_" . $module_data . "_history h
         LEFT JOIN " . NV_USERS_GLOBALTABLE . " u ON h.user_id = u.userid
         WHERE h.task_id = " . $id . "
         ORDER BY h.created_time DESC

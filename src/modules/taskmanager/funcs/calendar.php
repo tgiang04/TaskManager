@@ -27,7 +27,7 @@ $last_day = mktime(23, 59, 59, $month, date('t', $first_day), $year);
 // Lấy các công việc trong tháng
 $tasks = [];
 if (defined('NV_IS_USER')) {
-    $sql = "SELECT * FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks 
+    $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks 
             WHERE assigned_to = " . $user_info['userid'] . "
             AND deadline >= " . $first_day . " AND deadline <= " . $last_day . "
             ORDER BY deadline ASC";

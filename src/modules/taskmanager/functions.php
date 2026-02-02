@@ -25,7 +25,7 @@ function nv_task_get_project($project_id)
 {
     global $db, $db_config, $lang_data, $module_data;
     
-    $sql = "SELECT * FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_projects 
+    $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_projects 
             WHERE id = " . intval($project_id);
     $result = $db->query($sql);
     
@@ -48,7 +48,7 @@ function nv_task_get_project_members($project_id)
     
     $members = [];
     $sql = "SELECT pm.*, u.username, u.first_name, u.last_name, u.email 
-            FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_project_members pm
+            FROM " . NV_PREFIXLANG . "_" . $module_data . "_project_members pm
             LEFT JOIN " . NV_USERS_GLOBALTABLE . " u ON pm.user_id = u.userid
             WHERE pm.project_id = " . intval($project_id) . "
             ORDER BY pm.role DESC, u.username ASC";
@@ -79,7 +79,7 @@ function nv_task_check_project_permission($project_id, $user_id)
     }
     
     // Kiểm tra xem user có phải là thành viên không
-    $sql = "SELECT COUNT(*) FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_project_members
+    $sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_project_members
             WHERE project_id = " . intval($project_id) . " AND user_id = " . intval($user_id);
     $count = $db->query($sql)->fetchColumn();
     
@@ -109,10 +109,10 @@ function nv_task_get_task($task_id)
             u1.username as creator_username, u1.first_name as creator_first_name, u1.last_name as creator_last_name,
             u2.username as assigned_username, u2.first_name as assigned_first_name, u2.last_name as assigned_last_name,
             p.title as project_title
-            FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks t
+            FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks t
             LEFT JOIN " . NV_USERS_GLOBALTABLE . " u1 ON t.creator_id = u1.userid
             LEFT JOIN " . NV_USERS_GLOBALTABLE . " u2 ON t.assigned_to = u2.userid
-            LEFT JOIN " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_projects p ON t.project_id = p.id
+            LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_projects p ON t.project_id = p.id
             WHERE t.id = " . intval($task_id);
     
     $result = $db->query($sql);
@@ -146,7 +146,7 @@ function nv_task_check_task_permission($task_id, $user_id)
     }
     
     // Kiểm tra xem user có phải là người phối hợp không
-    $sql = "SELECT COUNT(*) FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_task_collaborators
+    $sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_task_collaborators
             WHERE task_id = " . intval($task_id) . " AND user_id = " . intval($user_id);
     $count = $db->query($sql)->fetchColumn();
     
@@ -172,7 +172,7 @@ function nv_task_get_status_list()
     global $db, $db_config, $lang_data, $module_data;
     
     $status_list = [];
-    $sql = "SELECT * FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_status 
+    $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_status 
             ORDER BY weight ASC";
     
     $result = $db->query($sql);
@@ -197,7 +197,7 @@ function nv_task_log_history($task_id, $user_id, $action, $old_value = '', $new_
 {
     global $db, $db_config, $lang_data, $module_data;
     
-    $sql = "INSERT INTO " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_history 
+    $sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_history 
             (task_id, user_id, action, old_value, new_value, created_time) 
             VALUES (" . intval($task_id) . ", " . intval($user_id) . ", :action, :old_value, :new_value, " . NV_CURRENTTIME . ")";
     
@@ -328,7 +328,7 @@ function nv_task_get_custom_fields()
     global $db, $db_config, $lang_data, $module_data;
     
     $fields = [];
-    $sql = "SELECT * FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_custom_fields 
+    $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_custom_fields 
             WHERE status = 1 
             ORDER BY weight ASC";
     
@@ -351,7 +351,7 @@ function nv_task_get_custom_values($task_id)
     global $db, $db_config, $lang_data, $module_data;
     
     $values = [];
-    $sql = "SELECT * FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_custom_values 
+    $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_custom_values 
             WHERE task_id = " . intval($task_id);
     
     $result = $db->query($sql);

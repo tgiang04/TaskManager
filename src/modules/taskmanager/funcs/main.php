@@ -20,29 +20,29 @@ $key_words = $module_info['keywords'];
 $stats = [];
 
 // Tổng số dự án
-$sql = "SELECT COUNT(*) FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_projects";
+$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_projects";
 $stats['total_projects'] = $db->query($sql)->fetchColumn();
 
 // Tổng số công việc
-$sql = "SELECT COUNT(*) FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks";
+$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks";
 $stats['total_tasks'] = $db->query($sql)->fetchColumn();
 
 // Công việc đã hoàn thành
-$sql = "SELECT COUNT(*) FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks WHERE status = 'completed'";
+$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks WHERE status = 'completed'";
 $stats['completed_tasks'] = $db->query($sql)->fetchColumn();
 
 // Công việc đang thực hiện
-$sql = "SELECT COUNT(*) FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks WHERE status = 'in_progress'";
+$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks WHERE status = 'in_progress'";
 $stats['in_progress_tasks'] = $db->query($sql)->fetchColumn();
 
 // Công việc quá hạn
-$sql = "SELECT COUNT(*) FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks 
+$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks 
         WHERE deadline > 0 AND deadline < " . NV_CURRENTTIME . " AND status NOT IN ('completed', 'cancelled')";
 $stats['overdue_tasks'] = $db->query($sql)->fetchColumn();
 
 // Công việc của tôi
 if (defined('NV_IS_USER')) {
-    $sql = "SELECT COUNT(*) FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks 
+    $sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks 
             WHERE assigned_to = " . $user_info['userid'] . " AND status NOT IN ('completed', 'cancelled')";
     $stats['my_tasks'] = $db->query($sql)->fetchColumn();
 } else {
@@ -51,7 +51,7 @@ if (defined('NV_IS_USER')) {
 
 // Dự án gần đây
 $recent_projects = [];
-$sql = "SELECT * FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_projects 
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_projects 
         WHERE is_public = 1 OR owner_id = " . (defined('NV_IS_USER') ? $user_info['userid'] : 0) . "
         ORDER BY created_time DESC 
         LIMIT 5";
@@ -64,8 +64,8 @@ while ($row = $result->fetch()) {
 $recent_tasks = [];
 if (defined('NV_IS_USER')) {
     $sql = "SELECT t.*, p.title as project_title 
-            FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks t
-            LEFT JOIN " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_projects p ON t.project_id = p.id
+            FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks t
+            LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_projects p ON t.project_id = p.id
             WHERE t.assigned_to = " . $user_info['userid'] . "
             ORDER BY t.created_time DESC 
             LIMIT 10";

@@ -49,7 +49,7 @@ if ($nv_Request->isset_request('save', 'post') && defined('NV_IS_USER')) {
         }
         
         // Cập nhật
-        $sql = "UPDATE " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_projects SET 
+        $sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_projects SET 
                 title = :title,
                 description = :description,
                 start_date = :start_date,
@@ -59,7 +59,7 @@ if ($nv_Request->isset_request('save', 'post') && defined('NV_IS_USER')) {
                 WHERE id = " . $id;
     } else {
         // Thêm mới
-        $sql = "INSERT INTO " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_projects 
+        $sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_projects 
                 (title, description, start_date, end_date, is_public, owner_id, created_time, updated_time) 
                 VALUES (:title, :description, :start_date, :end_date, :is_public, " . $user_info['userid'] . ", " . NV_CURRENTTIME . ", " . NV_CURRENTTIME . ")";
     }
@@ -75,7 +75,7 @@ if ($nv_Request->isset_request('save', 'post') && defined('NV_IS_USER')) {
         if ($id == 0) {
             $id = $db->lastInsertId();
             // Tự động thêm owner làm thành viên
-            $db->query("INSERT INTO " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_project_members 
+            $db->query("INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_project_members 
                        (project_id, user_id, role, added_time) VALUES (" . $id . ", " . $user_info['userid'] . ", 'owner', " . NV_CURRENTTIME . ")");
         }
         
@@ -99,10 +99,10 @@ if ($nv_Request->isset_request('delete', 'post') && defined('NV_IS_USER')) {
     $project = nv_task_get_project($id);
     if ($project && $project['owner_id'] == $user_info['userid']) {
         // Xóa thành viên
-        $db->query("DELETE FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_project_members WHERE project_id = " . $id);
+        $db->query("DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_project_members WHERE project_id = " . $id);
         
         // Xóa dự án
-        $db->query("DELETE FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_projects WHERE id = " . $id);
+        $db->query("DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_projects WHERE id = " . $id);
         
         nv_jsonOutput([
             'status' => 'OK',
@@ -125,9 +125,9 @@ if (defined('NV_IS_USER')) {
 }
 
 $sql = "SELECT p.*, COUNT(DISTINCT t.id) as total_tasks 
-        FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_projects p
-        LEFT JOIN " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_project_members pm ON p.id = pm.project_id
-        LEFT JOIN " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks t ON p.id = t.project_id
+        FROM " . NV_PREFIXLANG . "_" . $module_data . "_projects p
+        LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_project_members pm ON p.id = pm.project_id
+        LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_tasks t ON p.id = t.project_id
         " . (!empty($where) ? " WHERE " . implode(' AND ', $where) : "") . "
         GROUP BY p.id
         ORDER BY p.created_time DESC";

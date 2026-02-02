@@ -21,10 +21,10 @@ if ($nv_Request->isset_request('delete', 'post')) {
     
     if ($id > 0) {
         // Xóa dữ liệu trường
-        $db->query("DELETE FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_custom_values WHERE field_id = " . $id);
+        $db->query("DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_custom_values WHERE field_id = " . $id);
         
         // Xóa trường
-        $db->query("DELETE FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_custom_fields WHERE id = " . $id);
+        $db->query("DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_custom_fields WHERE id = " . $id);
         
         nv_jsonOutput([
             'status' => 'OK',
@@ -57,7 +57,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     }
     
     // Kiểm tra tên trường đã tồn tại chưa
-    $sql = "SELECT COUNT(*) FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_custom_fields 
+    $sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_custom_fields 
             WHERE field_name = :field_name";
     if ($id > 0) {
         $sql .= " AND id != " . $id;
@@ -76,7 +76,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     
     if ($id > 0) {
         // Cập nhật
-        $sql = "UPDATE " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_custom_fields SET 
+        $sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_custom_fields SET 
                 field_name = :field_name,
                 field_label = :field_label,
                 field_type = :field_type,
@@ -87,7 +87,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
                 WHERE id = " . $id;
     } else {
         // Thêm mới
-        $sql = "INSERT INTO " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_custom_fields 
+        $sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_custom_fields 
                 (field_name, field_label, field_type, field_options, is_required, weight, status) 
                 VALUES (:field_name, :field_label, :field_type, :field_options, :is_required, :weight, :status)";
     }
@@ -116,7 +116,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
 
 // Lấy danh sách trường
 $fields_list = [];
-$sql = "SELECT * FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_custom_fields ORDER BY weight ASC";
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_custom_fields ORDER BY weight ASC";
 $result = $db->query($sql);
 while ($row = $result->fetch()) {
     $fields_list[] = $row;

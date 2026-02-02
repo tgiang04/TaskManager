@@ -20,7 +20,7 @@ $key_words = $module_info['keywords'];
 $sql_create_module = [];
 
 // Bảng dự án
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_projects (
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . NV_PREFIXLANG . "_" . $module_data . "_projects (
     id int(11) unsigned NOT NULL AUTO_INCREMENT,
     title varchar(255) NOT NULL,
     description text,
@@ -38,7 +38,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 ) ENGINE=InnoDB";
 
 // Bảng thành viên dự án
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_project_members (
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . NV_PREFIXLANG . "_" . $module_data . "_project_members (
     id int(11) unsigned NOT NULL AUTO_INCREMENT,
     project_id int(11) unsigned NOT NULL,
     user_id int(11) unsigned NOT NULL,
@@ -51,7 +51,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 ) ENGINE=InnoDB";
 
 // Bảng công việc
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks (
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . NV_PREFIXLANG . "_" . $module_data . "_tasks (
     id int(11) unsigned NOT NULL AUTO_INCREMENT,
     project_id int(11) unsigned NOT NULL DEFAULT '0',
     title varchar(255) NOT NULL,
@@ -74,7 +74,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 ) ENGINE=InnoDB";
 
 // Bảng người phối hợp công việc
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_task_collaborators (
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . NV_PREFIXLANG . "_" . $module_data . "_task_collaborators (
     id int(11) unsigned NOT NULL AUTO_INCREMENT,
     task_id int(11) unsigned NOT NULL,
     user_id int(11) unsigned NOT NULL,
@@ -86,7 +86,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 ) ENGINE=InnoDB";
 
 // Bảng bình luận
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_comments (
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . NV_PREFIXLANG . "_" . $module_data . "_comments (
     id int(11) unsigned NOT NULL AUTO_INCREMENT,
     task_id int(11) unsigned NOT NULL,
     user_id int(11) unsigned NOT NULL,
@@ -101,7 +101,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 ) ENGINE=InnoDB";
 
 // Bảng đính kèm file
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_attachments (
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . NV_PREFIXLANG . "_" . $module_data . "_attachments (
     id int(11) unsigned NOT NULL AUTO_INCREMENT,
     task_id int(11) unsigned NOT NULL,
     filename varchar(255) NOT NULL,
@@ -116,7 +116,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 ) ENGINE=InnoDB";
 
 // Bảng lịch sử thay đổi (Audit Log)
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_history (
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . NV_PREFIXLANG . "_" . $module_data . "_history (
     id int(11) unsigned NOT NULL AUTO_INCREMENT,
     task_id int(11) unsigned NOT NULL,
     user_id int(11) unsigned NOT NULL,
@@ -131,7 +131,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 ) ENGINE=InnoDB";
 
 // Bảng trạng thái tùy biến
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_status (
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . NV_PREFIXLANG . "_" . $module_data . "_status (
     id int(11) unsigned NOT NULL AUTO_INCREMENT,
     status_key varchar(50) NOT NULL,
     status_name varchar(100) NOT NULL,
@@ -143,7 +143,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 ) ENGINE=InnoDB";
 
 // Bảng trường dữ liệu tùy biến
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_custom_fields (
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . NV_PREFIXLANG . "_" . $module_data . "_custom_fields (
     id int(11) unsigned NOT NULL AUTO_INCREMENT,
     field_name varchar(100) NOT NULL,
     field_label varchar(255) NOT NULL,
@@ -157,7 +157,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 ) ENGINE=InnoDB";
 
 // Bảng giá trị trường tùy biến
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_custom_values (
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . NV_PREFIXLANG . "_" . $module_data . "_custom_values (
     id int(11) unsigned NOT NULL AUTO_INCREMENT,
     task_id int(11) unsigned NOT NULL,
     field_id int(11) unsigned NOT NULL,
@@ -169,7 +169,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 ) ENGINE=InnoDB";
 
 // Thêm trạng thái mặc định
-$sql_create_module[] = "INSERT INTO " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_status 
+$sql_create_module[] = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_status 
     (status_key, status_name, color, weight, is_default) VALUES
     ('new', 'Mới', '#17a2b8', 1, 1),
     ('in_progress', 'Đang làm', '#ffc107', 2, 0),

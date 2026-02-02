@@ -27,10 +27,10 @@ if (defined('NV_IS_USER')) {
 
 $sql = "SELECT t.*, p.title as project_title,
         u.username as assigned_username
-        FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks t
-        LEFT JOIN " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_projects p ON t.project_id = p.id
+        FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks t
+        LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_projects p ON t.project_id = p.id
         LEFT JOIN " . NV_USERS_GLOBALTABLE . " u ON t.assigned_to = u.userid
-        LEFT JOIN " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_task_collaborators tc ON t.id = tc.task_id
+        LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_task_collaborators tc ON t.id = tc.task_id
         " . (!empty($where) ? " WHERE " . implode(' AND ', $where) : "") . "
         GROUP BY t.id
         ORDER BY t.created_time DESC";

@@ -26,8 +26,8 @@ $page = $nv_Request->get_int('page', 'get', 1);
 // Lấy danh sách công việc của user
 $sql = "SELECT t.*, p.title as project_title,
         u1.username as creator_username
-        FROM " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_tasks t
-        LEFT JOIN " . $db_config['prefix'] . "_" . $lang_data . "_" . $module_data . "_projects p ON t.project_id = p.id
+        FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks t
+        LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_projects p ON t.project_id = p.id
         LEFT JOIN " . NV_USERS_GLOBALTABLE . " u1 ON t.creator_id = u1.userid
         WHERE t.assigned_to = " . $user_info['userid'] . "
         ORDER BY t.deadline ASC, t.created_time DESC";
