@@ -15,7 +15,7 @@ FileETag None
   </IfModule>
 
   RewriteEngine On
-  RewriteBase /
+  RewriteBase /nukeviet/src/
   RewriteCond %{REQUEST_FILENAME} /(\.(.*)|composer\.json|default\.(htaccess\.txt|web\.config\.txt|php)|mainfile\.php|modules/[^/]+/blocks/[^/]+\.json|themes/[^/]+/blocks/[^/]+\.json|web\.config|config\.php)$ [NC]
   RewriteRule ^.* - [L,R=404]
   RewriteCond %{REQUEST_URI} ^/(data/ip6?|includes|install/tpl|vendor|assets/tpl|data/cache|data/certs|data/logs)/.* [NC]
@@ -24,15 +24,15 @@ FileETag None
   RewriteRule ^.* - [L,R=404]
 </IfModule>
 
-ErrorDocument 400 /error.php?code=400
-ErrorDocument 403 /error.php?code=403
-ErrorDocument 404 /error.php?code=404
-ErrorDocument 405 /error.php?code=405
-ErrorDocument 408 /error.php?code=408
-ErrorDocument 500 /error.php?code=500
-ErrorDocument 502 /error.php?code=502
-ErrorDocument 503 /error.php?code=503
-ErrorDocument 504 /error.php?code=504
+ErrorDocument 400 /nukeviet/src/error.php?code=400
+ErrorDocument 403 /nukeviet/src/error.php?code=403
+ErrorDocument 404 /nukeviet/src/error.php?code=404
+ErrorDocument 405 /nukeviet/src/error.php?code=405
+ErrorDocument 408 /nukeviet/src/error.php?code=408
+ErrorDocument 500 /nukeviet/src/error.php?code=500
+ErrorDocument 502 /nukeviet/src/error.php?code=502
+ErrorDocument 503 /nukeviet/src/error.php?code=503
+ErrorDocument 504 /nukeviet/src/error.php?code=504
 
 <IfModule mod_mime.c>
   AddType application/json .json
@@ -142,7 +142,7 @@ ErrorDocument 504 /error.php?code=504
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /
+  RewriteBase /nukeviet/src/
 
   RewriteCond %{REQUEST_FILENAME} /api.php$ [NC]
   RewriteCond %{REQUEST_METHOD} !^(POST) [NC]
@@ -155,8 +155,8 @@ ErrorDocument 504 /error.php?code=504
   RewriteRule ^sitemap-([a-z]{2})\.xml$ index.php?language=$1&nv=SitemapIndex [L]
   RewriteRule ^sitemap-([a-z]{2})\.([a-zA-Z0-9\-]+)\.xml$ index.php?language=$1&nv=$2&op=sitemap [L]
   RewriteRule ^sitemap-([a-z]{2})\.([a-zA-Z0-9\-]+)\.([a-zA-Z0-9\-]+)\.xml$ index.php?language=$1&nv=$2&op=sitemap/$3 [L]
-  RewriteRule ^api/(en|fr|vi)/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/?$ api.php?language=$1&module=$2&action=$3 [L]
-  RewriteRule ^api/(en|fr|vi)/([a-zA-Z0-9]+)/?$ api.php?language=$1&action=$2 [L]
+  RewriteRule ^api/(vi)/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/?$ api.php?language=$1&module=$2&action=$3 [L]
+  RewriteRule ^api/(vi)/([a-zA-Z0-9]+)/?$ api.php?language=$1&action=$2 [L]
   RewriteRule ^api/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/?$ api.php?module=$1&action=$2 [L]
   RewriteRule ^api/([a-zA-Z0-9]+)/?$ api.php?action=$1 [L]
 
@@ -167,8 +167,8 @@ ErrorDocument 504 /error.php?code=504
   RewriteRule (.*)(/|\.html)$ index.php [L]
 
   RewriteRule (.*)tag/([^?]+)$ index.php [L]
-  RewriteRule ^([a-zA-Z0-9\-\/]+)/([a-zA-Z0-9\-]+)$ /$1/$2/ [L,R=301]
-  RewriteRule ^([a-zA-Z0-9\-]+)$ /$1/ [L,R=301]
+  RewriteRule ^([a-zA-Z0-9\-\/]+)/([a-zA-Z0-9\-]+)$ /nukeviet/src/$1/$2/ [L,R=301]
+  RewriteRule ^([a-zA-Z0-9\-]+)$ /nukeviet/src/$1/ [L,R=301]
 </IfModule>
 
 #NUKEVIET_REWRITE_END
