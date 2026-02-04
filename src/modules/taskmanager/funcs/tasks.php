@@ -13,10 +13,10 @@ if (!defined('NV_IS_MOD_TASKMANAGER')) {
     exit('Stop!!!');
 }
 
-$page_title = $lang_module['tasks'];
+$page_title = isset($lang_module['tasks']) ? $lang_module['tasks'] : 'Công việc';
 $key_words = $module_info['keywords'];
 
-$per_page = $module_config[$module_name]['per_page'];
+$per_page = isset($module_config[$module_name]['per_page']) ? $module_config[$module_name]['per_page'] : 20;
 $page = $nv_Request->get_int('page', 'get', 1);
 
 // Lấy danh sách công việc
@@ -27,10 +27,10 @@ if (defined('NV_IS_USER')) {
 
 $sql = "SELECT t.*, p.title as project_title,
         u.username as assigned_username
-        FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks t
-        LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_projects p ON t.project_id = p.id
+        FROM " . NV_PREFIXLANG . "_taskmanager_tasks t
+        LEFT JOIN " . NV_PREFIXLANG . "_taskmanager_projects p ON t.project_id = p.id
         LEFT JOIN " . NV_USERS_GLOBALTABLE . " u ON t.assigned_to = u.userid
-        LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_task_collaborators tc ON t.id = tc.task_id
+        LEFT JOIN " . NV_PREFIXLANG . "_taskmanager_task_collaborators tc ON t.id = tc.task_id
         " . (!empty($where) ? " WHERE " . implode(' AND ', $where) : "") . "
         GROUP BY t.id
         ORDER BY t.created_time DESC";

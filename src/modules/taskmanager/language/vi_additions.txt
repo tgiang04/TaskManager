@@ -1,0 +1,4 @@
+// Thêm vào cuối file vi.php
+$lang_module['choose_file'] = 'Chọn file';
+$lang_module['max_file_size'] = 'Kích thước tối đa';
+$lang_module['upload'] = 'Tải lên';

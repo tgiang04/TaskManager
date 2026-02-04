@@ -20,14 +20,14 @@ if (!defined('NV_IS_USER')) {
 $page_title = $lang_module['my_tasks'];
 $key_words = $module_info['keywords'];
 
-$per_page = $module_config[$module_name]['per_page'];
+$per_page = isset($module_config[$module_name]['per_page']) ? $module_config[$module_name]['per_page'] : 20;
 $page = $nv_Request->get_int('page', 'get', 1);
 
 // Lấy danh sách công việc của user
 $sql = "SELECT t.*, p.title as project_title,
         u1.username as creator_username
-        FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks t
-        LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_projects p ON t.project_id = p.id
+        FROM " . NV_PREFIXLANG . "_taskmanager_tasks t
+        LEFT JOIN " . NV_PREFIXLANG . "_taskmanager_projects p ON t.project_id = p.id
         LEFT JOIN " . NV_USERS_GLOBALTABLE . " u1 ON t.creator_id = u1.userid
         WHERE t.assigned_to = " . $user_info['userid'] . "
         ORDER BY t.deadline ASC, t.created_time DESC";
@@ -58,7 +58,7 @@ if (!empty($tasks)) {
         if ($task['deadline'] > 0 && $task['deadline'] < NV_CURRENTTIME && !in_array($task['status'], ['completed', 'cancelled'])) {
             $task['is_overdue'] = true;
             $xtpl->parse('main.task.overdue');
-        } elseif ($task['deadline'] > 0 && $task['deadline'] < (NV_CURRENTTIME + 86400 * $module_config[$module_name]['deadline_warning_days'])) {
+        } elseif ($task['deadline'] > 0 && $task['deadline'] < (NV_CURRENTTIME + 86400 * (isset($module_config[$module_name]['deadline_warning_days']) ? $module_config[$module_name]['deadline_warning_days'] : 3))) {
             $task['is_due_soon'] = true;
             $xtpl->parse('main.task.due_soon');
         }

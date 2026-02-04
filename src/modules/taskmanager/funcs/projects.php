@@ -16,7 +16,7 @@ if (!defined('NV_IS_MOD_TASKMANAGER')) {
 $page_title = $lang_module['projects'];
 $key_words = $module_info['keywords'];
 
-$per_page = $module_config[$module_name]['per_page'];
+$per_page = isset($module_config[$module_name]['per_page']) ? $module_config[$module_name]['per_page'] : 20;
 $page = $nv_Request->get_int('page', 'get', 1);
 
 // Xử lý thêm/sửa dự án
@@ -49,7 +49,7 @@ if ($nv_Request->isset_request('save', 'post') && defined('NV_IS_USER')) {
         }
         
         // Cập nhật
-        $sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_projects SET 
+        $sql = "UPDATE " . NV_PREFIXLANG . "_taskmanager_projects SET 
                 title = :title,
                 description = :description,
                 start_date = :start_date,
@@ -59,7 +59,7 @@ if ($nv_Request->isset_request('save', 'post') && defined('NV_IS_USER')) {
                 WHERE id = " . $id;
     } else {
         // Thêm mới
-        $sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_projects 
+        $sql = "INSERT INTO " . NV_PREFIXLANG . "_taskmanager_projects 
                 (title, description, start_date, end_date, is_public, owner_id, created_time, updated_time) 
                 VALUES (:title, :description, :start_date, :end_date, :is_public, " . $user_info['userid'] . ", " . NV_CURRENTTIME . ", " . NV_CURRENTTIME . ")";
     }
@@ -75,7 +75,7 @@ if ($nv_Request->isset_request('save', 'post') && defined('NV_IS_USER')) {
         if ($id == 0) {
             $id = $db->lastInsertId();
             // Tự động thêm owner làm thành viên
-            $db->query("INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_project_members 
+            $db->query("INSERT INTO " . NV_PREFIXLANG . "_taskmanager_project_members 
                        (project_id, user_id, role, added_time) VALUES (" . $id . ", " . $user_info['userid'] . ", 'owner', " . NV_CURRENTTIME . ")");
         }
         
@@ -99,10 +99,10 @@ if ($nv_Request->isset_request('delete', 'post') && defined('NV_IS_USER')) {
     $project = nv_task_get_project($id);
     if ($project && $project['owner_id'] == $user_info['userid']) {
         // Xóa thành viên
-        $db->query("DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_project_members WHERE project_id = " . $id);
+        $db->query("DELETE FROM " . NV_PREFIXLANG . "_taskmanager_project_members WHERE project_id = " . $id);
         
         // Xóa dự án
-        $db->query("DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_projects WHERE id = " . $id);
+        $db->query("DELETE FROM " . NV_PREFIXLANG . "_taskmanager_projects WHERE id = " . $id);
         
         nv_jsonOutput([
             'status' => 'OK',
@@ -125,9 +125,9 @@ if (defined('NV_IS_USER')) {
 }
 
 $sql = "SELECT p.*, COUNT(DISTINCT t.id) as total_tasks 
-        FROM " . NV_PREFIXLANG . "_" . $module_data . "_projects p
-        LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_project_members pm ON p.id = pm.project_id
-        LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_tasks t ON p.id = t.project_id
+        FROM " . NV_PREFIXLANG . "_taskmanager_projects p
+        LEFT JOIN " . NV_PREFIXLANG . "_taskmanager_project_members pm ON p.id = pm.project_id
+        LEFT JOIN " . NV_PREFIXLANG . "_taskmanager_tasks t ON p.id = t.project_id
         " . (!empty($where) ? " WHERE " . implode(' AND ', $where) : "") . "
         GROUP BY p.id
         ORDER BY p.created_time DESC";
@@ -144,9 +144,13 @@ while ($row = $result->fetch()) {
 $xtpl = new XTemplate('projects.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('GLANG', $lang_global);
+$xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
+$xtpl->assign('TEMPLATE', $global_config['module_theme']);
+$xtpl->assign('MODULE_FILE', $module_file);
 
 if (defined('NV_IS_USER')) {
     $xtpl->parse('main.add_button');
+    $xtpl->parse('main.project_modal');
 }
 
 if (!empty($projects)) {
@@ -155,6 +159,12 @@ if (!empty($projects)) {
         $project['start_date_format'] = nv_task_format_date($project['start_date'], 'd/m/Y');
         $project['end_date_format'] = nv_task_format_date($project['end_date'], 'd/m/Y');
         $project['status_name'] = $lang_module['status_' . $project['status']] ?? $project['status'];
+        
+        // Kiểm tra xem user có quyền xóa không
+        if (defined('NV_IS_USER') && $project['owner_id'] == $user_info['userid']) {
+            $xtpl->assign('PROJECT', $project);
+            $xtpl->parse('main.project.project_actions');
+        }
         
         $xtpl->assign('PROJECT', $project);
         $xtpl->parse('main.project');
@@ -170,6 +180,9 @@ if (!empty($projects)) {
         }
     }
 } else {
+    if (defined('NV_IS_USER')) {
+        $xtpl->parse('main.empty.add_project_button');
+    }
     $xtpl->parse('main.empty');
 }
 

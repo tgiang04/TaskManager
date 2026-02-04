@@ -40,7 +40,7 @@ $tasks = [];
 $sql = "SELECT t.*, 
         u1.username as creator_username,
         u2.username as assigned_username
-        FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks t
+        FROM " . NV_PREFIXLANG . "_taskmanager_tasks t
         LEFT JOIN " . NV_USERS_GLOBALTABLE . " u1 ON t.creator_id = u1.userid
         LEFT JOIN " . NV_USERS_GLOBALTABLE . " u2 ON t.assigned_to = u2.userid
         WHERE t.project_id = " . $id . "

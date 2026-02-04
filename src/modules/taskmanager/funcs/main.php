@@ -20,29 +20,29 @@ $key_words = $module_info['keywords'];
 $stats = [];
 
 // Tổng số dự án
-$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_projects";
+$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_taskmanager_projects";
 $stats['total_projects'] = $db->query($sql)->fetchColumn();
 
 // Tổng số công việc
-$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks";
+$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_taskmanager_tasks";
 $stats['total_tasks'] = $db->query($sql)->fetchColumn();
 
 // Công việc đã hoàn thành
-$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks WHERE status = 'completed'";
+$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_taskmanager_tasks WHERE status = 'completed'";
 $stats['completed_tasks'] = $db->query($sql)->fetchColumn();
 
 // Công việc đang thực hiện
-$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks WHERE status = 'in_progress'";
+$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_taskmanager_tasks WHERE status = 'in_progress'";
 $stats['in_progress_tasks'] = $db->query($sql)->fetchColumn();
 
 // Công việc quá hạn
-$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks 
+$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_taskmanager_tasks 
         WHERE deadline > 0 AND deadline < " . NV_CURRENTTIME . " AND status NOT IN ('completed', 'cancelled')";
 $stats['overdue_tasks'] = $db->query($sql)->fetchColumn();
 
 // Công việc của tôi
 if (defined('NV_IS_USER')) {
-    $sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks 
+    $sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_taskmanager_tasks 
             WHERE assigned_to = " . $user_info['userid'] . " AND status NOT IN ('completed', 'cancelled')";
     $stats['my_tasks'] = $db->query($sql)->fetchColumn();
 } else {
@@ -51,7 +51,7 @@ if (defined('NV_IS_USER')) {
 
 // Dự án gần đây
 $recent_projects = [];
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_projects 
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_taskmanager_projects 
         WHERE is_public = 1 OR owner_id = " . (defined('NV_IS_USER') ? $user_info['userid'] : 0) . "
         ORDER BY created_time DESC 
         LIMIT 5";
@@ -64,8 +64,8 @@ while ($row = $result->fetch()) {
 $recent_tasks = [];
 if (defined('NV_IS_USER')) {
     $sql = "SELECT t.*, p.title as project_title 
-            FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks t
-            LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_projects p ON t.project_id = p.id
+            FROM " . NV_PREFIXLANG . "_taskmanager_tasks t
+        LEFT JOIN " . NV_PREFIXLANG . "_taskmanager_projects p ON t.project_id = p.id
             WHERE t.assigned_to = " . $user_info['userid'] . "
             ORDER BY t.created_time DESC 
             LIMIT 10";
@@ -79,15 +79,32 @@ $xtpl = new XTemplate('main.tpl', NV_ROOTDIR . '/themes/' . $global_config['modu
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('GLANG', $lang_global);
 $xtpl->assign('STATS', $stats);
+$xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
+$xtpl->assign('TEMPLATE', $global_config['module_theme']);
+$xtpl->assign('MODULE_FILE', $module_file);
+$xtpl->assign('BASE_URL', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name);
+$xtpl->assign('NV_OP_VARIABLE', NV_OP_VARIABLE);
+
+if (defined('NV_IS_USER')) {
+    $xtpl->parse('main.quick_actions');
+}
 
 // Hiển thị dự án gần đây
 if (!empty($recent_projects)) {
     foreach ($recent_projects as $project) {
         $project['link'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=project-detail&amp;id=' . $project['id'];
+        // Lấy số lượng công việc
+        $sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_taskmanager_tasks WHERE project_id = " . $project['id'];
+        $project['total_tasks'] = $db->query($sql)->fetchColumn();
+        $project['created_time_format'] = nv_task_format_date($project['created_time'], 'd/m/Y');
+        
         $xtpl->assign('PROJECT', $project);
         $xtpl->parse('main.project');
     }
 } else {
+    if (defined('NV_IS_USER')) {
+        $xtpl->parse('main.no_projects.add_project_link');
+    }
     $xtpl->parse('main.no_projects');
 }
 
@@ -100,25 +117,27 @@ if (!empty($recent_tasks)) {
         $task['status_name'] = isset($status_list[$task['status']]) ? $status_list[$task['status']]['status_name'] : $task['status'];
         $task['status_color'] = isset($status_list[$task['status']]) ? $status_list[$task['status']]['color'] : '#6c757d';
         $task['priority_class'] = '';
+        $task['priority'] = isset($task['priority']) ? $task['priority'] : 'medium';
         
         switch ($task['priority']) {
             case 'low':
-                $task['priority_class'] = 'text-success';
-                $task['priority_name'] = $lang_module['task_priority_low'];
+                $task['priority_class'] = 'low';
+                $task['priority_name'] = isset($lang_module['task_priority_low']) ? $lang_module['task_priority_low'] : 'Thấp';
                 break;
             case 'medium':
-                $task['priority_class'] = 'text-info';
-                $task['priority_name'] = $lang_module['task_priority_medium'];
+                $task['priority_class'] = 'medium';
+                $task['priority_name'] = isset($lang_module['task_priority_medium']) ? $lang_module['task_priority_medium'] : 'Trung bình';
                 break;
             case 'high':
-                $task['priority_class'] = 'text-warning';
-                $task['priority_name'] = $lang_module['task_priority_high'];
+                $task['priority_class'] = 'high';
+                $task['priority_name'] = isset($lang_module['task_priority_high']) ? $lang_module['task_priority_high'] : 'Cao';
                 break;
             case 'urgent':
-                $task['priority_class'] = 'text-danger';
-                $task['priority_name'] = $lang_module['task_priority_urgent'];
+                $task['priority_class'] = 'high';
+                $task['priority_name'] = isset($lang_module['task_priority_urgent']) ? $lang_module['task_priority_urgent'] : 'Khẩn cấp';
                 break;
             default:
+                $task['priority_class'] = 'medium';
                 $task['priority_name'] = $task['priority'];
         }
         
