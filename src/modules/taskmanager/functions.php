@@ -361,3 +361,147 @@ function nv_task_get_custom_values($task_id)
     
     return $values;
 }
+
+/**
+ * nv_task_check_project_permission_by_task()
+ * 
+ * @param int $task_id
+ * @param int $user_id
+ * @return bool
+ */
+function nv_task_check_project_permission_by_task($task_id, $user_id)
+{
+    global $db, $db_config, $lang_data, $module_data;
+    
+    $sql = "SELECT project_id FROM " . NV_PREFIXLANG . "_" . $module_data . "_tasks 
+            WHERE id = " . intval($task_id);
+    $project_id = $db->query($sql)->fetchColumn();
+    
+    if ($project_id) {
+        return nv_task_check_project_permission($project_id, $user_id);
+    }
+    
+    return false;
+}
+
+/**
+ * nv_format_duration()
+ * Format duration in seconds to human readable format
+ * 
+ * @param int $seconds
+ * @return string
+ */
+function nv_format_duration($seconds)
+{
+    if ($seconds <= 0) {
+        return '0 phút';
+    }
+    
+    $hours = floor($seconds / 3600);
+    $minutes = floor(($seconds % 3600) / 60);
+    
+    $parts = [];
+    if ($hours > 0) {
+        $parts[] = $hours . ' giờ';
+    }
+    if ($minutes > 0) {
+        $parts[] = $minutes . ' phút';
+    }
+    
+    return implode(' ', $parts);
+}
+
+/**
+ * nv_task_get_dependencies()
+ * Get task dependencies
+ * 
+ * @param int $task_id
+ * @return array
+ */
+function nv_task_get_dependencies($task_id)
+{
+    global $db, $db_config, $lang_data, $module_data;
+    
+    $dependencies = [];
+    $sql = "SELECT td.*, t.title as task_title
+            FROM " . NV_PREFIXLANG . "_" . $module_data . "_task_dependencies td
+            INNER JOIN " . NV_PREFIXLANG . "_" . $module_data . "_tasks t ON td.dependency_task_id = t.id
+            WHERE td.task_id = " . intval($task_id);
+    
+    $result = $db->query($sql);
+    while ($row = $result->fetch()) {
+        $dependencies[] = $row;
+    }
+    
+    return $dependencies;
+}
+
+/**
+ * nv_task_add_dependency()
+ * Add task dependency
+ * 
+ * @param int $task_id
+ * @param int $dependency_task_id
+ * @param string $type (finish_to_start, start_to_start, finish_to_finish, start_to_finish)
+ * @return bool
+ */
+function nv_task_add_dependency($task_id, $dependency_task_id, $type = 'finish_to_start')
+{
+    global $db, $db_config, $lang_data, $module_data;
+    
+    // Kiểm tra circular dependency
+    if (nv_task_has_circular_dependency($task_id, $dependency_task_id)) {
+        return false;
+    }
+    
+    $sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_task_dependencies
+            (task_id, dependency_task_id, dependency_type)
+            VALUES (" . intval($task_id) . ", " . intval($dependency_task_id) . ", " . $db->quote($type) . ")";
+    
+    return $db->query($sql) ? true : false;
+}
+
+/**
+ * nv_task_has_circular_dependency()
+ * Check if adding a dependency would create a circular reference
+ * 
+ * @param int $task_id
+ * @param int $dependency_task_id
+ * @return bool
+ */
+function nv_task_has_circular_dependency($task_id, $dependency_task_id)
+{
+    global $db, $db_config, $lang_data, $module_data;
+    
+    // Nếu task_id == dependency_task_id
+    if ($task_id == $dependency_task_id) {
+        return true;
+    }
+    
+    // Kiểm tra xem dependency_task_id có phụ thuộc vào task_id không (recursive)
+    $checked = [];
+    $to_check = [$dependency_task_id];
+    
+    while (!empty($to_check)) {
+        $current_id = array_shift($to_check);
+        
+        if (in_array($current_id, $checked)) {
+            continue;
+        }
+        
+        $checked[] = $current_id;
+        
+        $sql = "SELECT dependency_task_id FROM " . NV_PREFIXLANG . "_" . $module_data . "_task_dependencies
+                WHERE task_id = " . intval($current_id);
+        $result = $db->query($sql);
+        
+        while ($row = $result->fetch()) {
+            if ($row['dependency_task_id'] == $task_id) {
+                return true; // Circular dependency found
+            }
+            $to_check[] = $row['dependency_task_id'];
+        }
+    }
+    
+    return false;
+}

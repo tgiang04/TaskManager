@@ -183,6 +183,95 @@ $lang_module['filter_completed'] = 'Đã xong';
 $lang_module['comment_content_placeholder'] = 'Nhập nội dung bình luận...';
 $lang_module['project_title_placeholder'] = 'Nhập tên dự án...';
 $lang_module['project_description_placeholder'] = 'Mô tả chi tiết về dự án...';
-$lang_module['choose_file'] = 'Ch?n file';
-$lang_module['max_file_size'] = 'K�ch th�?c t?i �a';
-$lang_module['upload'] = 'T?i l�n';
+$lang_module['choose_file'] = 'Chọn file';
+$lang_module['max_file_size'] = 'Kích thước tối đa';
+$lang_module['upload'] = 'Tải lên';
+
+// Advanced Features
+$lang_module['dashboard'] = 'Bảng điều khiển';
+$lang_module['time_tracking'] = 'Theo dõi thời gian';
+$lang_module['kanban_board'] = 'Bảng Kanban';
+$lang_module['gantt_chart'] = 'Biểu đồ Gantt';
+$lang_module['templates'] = 'Mẫu dự án';
+$lang_module['reports'] = 'Báo cáo';
+
+// Dashboard
+$lang_module['total_projects'] = 'Tổng số dự án';
+$lang_module['active_projects'] = 'Dự án đang hoạt động';
+$lang_module['total_tasks'] = 'Tổng số công việc';
+$lang_module['my_tasks_count'] = 'Công việc của tôi';
+$lang_module['overdue_tasks'] = 'Công việc quá hạn';
+$lang_module['completed_this_week'] = 'Hoàn thành tuần này';
+$lang_module['stats_by_status'] = 'Thống kê theo trạng thái';
+$lang_module['stats_by_priority'] = 'Thống kê theo độ ưu tiên';
+$lang_module['recent_activities'] = 'Hoạt động gần đây';
+$lang_module['monthly_stats'] = 'Thống kê theo tháng';
+$lang_module['top_performers'] = 'Thành viên xuất sắc';
+$lang_module['completion_rate'] = 'Tỷ lệ hoàn thành';
+
+// Time Tracking
+$lang_module['timer_started'] = 'Bắt đầu đếm thời gian';
+$lang_module['timer_stopped'] = 'Dừng đếm thời gian';
+$lang_module['start_timer'] = 'Bắt đầu';
+$lang_module['stop_timer'] = 'Dừng lại';
+$lang_module['time_log'] = 'Nhật ký thời gian';
+$lang_module['time_description'] = 'Mô tả công việc';
+$lang_module['duration'] = 'Thời lượng';
+$lang_module['total_time'] = 'Tổng thời gian';
+$lang_module['active_timer'] = 'Đồng hồ đang chạy';
+$lang_module['no_active_timer'] = 'Không có đồng hồ nào đang chạy';
+$lang_module['time_logs'] = 'Lịch sử thời gian';
+$lang_module['add_manual_time'] = 'Thêm thời gian thủ công';
+$lang_module['edit_time_log'] = 'Sửa nhật ký';
+$lang_module['delete_time_log'] = 'Xóa nhật ký';
+
+// Kanban
+$lang_module['task_moved'] = 'Di chuyển công việc thành công';
+$lang_module['drag_drop_hint'] = 'Kéo và thả để di chuyển công việc';
+$lang_module['select_project'] = 'Chọn dự án';
+$lang_module['all_projects'] = 'Tất cả dự án';
+
+// Gantt Chart
+$lang_module['timeline'] = 'Tiến độ dự án';
+$lang_module['dependencies'] = 'Phụ thuộc';
+$lang_module['add_dependency'] = 'Thêm phụ thuộc';
+$lang_module['dependency_type'] = 'Loại phụ thuộc';
+$lang_module['finish_to_start'] = 'Kết thúc - Bắt đầu';
+$lang_module['start_to_start'] = 'Bắt đầu - Bắt đầu';
+$lang_module['finish_to_finish'] = 'Kết thúc - Kết thúc';
+$lang_module['start_to_finish'] = 'Bắt đầu - Kết thúc';
+$lang_module['circular_dependency'] = 'Không thể tạo phụ thuộc vòng';
+
+// Templates
+$lang_module['template_name'] = 'Tên mẫu';
+$lang_module['template_category'] = 'Danh mục';
+$lang_module['use_template'] = 'Sử dụng mẫu';
+$lang_module['save_as_template'] = 'Lưu làm mẫu';
+$lang_module['template_saved'] = 'Đã lưu mẫu thành công';
+$lang_module['template_not_found'] = 'Không tìm thấy mẫu';
+$lang_module['project_created_from_template'] = 'Đã tạo dự án từ mẫu thành công';
+$lang_module['all_categories'] = 'Tất cả danh mục';
+$lang_module['software_development'] = 'Phát triển phần mềm';
+$lang_module['marketing'] = 'Marketing';
+$lang_module['design'] = 'Thiết kế';
+$lang_module['business'] = 'Kinh doanh';
+$lang_module['custom'] = 'Tùy chỉnh';
+$lang_module['task_count'] = 'Số công việc';
+
+// Reports
+$lang_module['report_type'] = 'Loại báo cáo';
+$lang_module['overview_report'] = 'Báo cáo tổng quan';
+$lang_module['tasks_report'] = 'Báo cáo công việc';
+$lang_module['time_report'] = 'Báo cáo thời gian';
+$lang_module['users_report'] = 'Báo cáo theo thành viên';
+$lang_module['export_to_csv'] = 'Xuất CSV';
+$lang_module['export_to_pdf'] = 'Xuất PDF';
+$lang_module['date_from'] = 'Từ ngày';
+$lang_module['date_to'] = 'Đến ngày';
+$lang_module['generate_report'] = 'Tạo báo cáo';
+$lang_module['avg_time_per_task'] = 'Thời gian trung bình/công việc';
+$lang_module['user_performance'] = 'Hiệu suất thành viên';
+
+// Errors
+$lang_module['error_project_title_required'] = 'Vui lòng nhập tên dự án';
+$lang_module['error_occurred'] = 'Đã có lỗi xảy ra';
