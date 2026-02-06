@@ -49,7 +49,7 @@ if (!empty($tasks)) {
     $status_list = nv_task_get_status_list();
     
     foreach ($tasks as $task) {
-        $task['link'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=task-detail&amp;id=' . $task['id'];
+        $task['link'] = nv_task_get_task_url($task['id'], $task['alias'] ?? '', '');
         $task['status_name'] = isset($status_list[$task['status']]) ? $status_list[$task['status']]['status_name'] : $task['status'];
         $task['status_color'] = isset($status_list[$task['status']]) ? $status_list[$task['status']]['color'] : '#6c757d';
         $task['deadline_format'] = nv_task_format_date($task['deadline'], 'd/m/Y H:i');

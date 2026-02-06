@@ -15,7 +15,7 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE')) {
 
 $module_version = [
     'name' => 'TaskManager',
-    'modfuncs' => 'main,projects,project-detail,tasks,task-detail,my-tasks,calendar,dashboard,time-tracking,kanban,gantt,templates,reports',
+    'modfuncs' => 'main,projects,project-detail,tasks,task-detail,my-tasks,calendar,dashboard,time-tracking,kanban,gantt,templates,reports,sitemap',
     'submenu' => 'main,projects,my-tasks,calendar,dashboard,kanban,reports',
     'is_sysmod' => 0,
     'virtual' => 1,

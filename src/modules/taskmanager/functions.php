@@ -19,18 +19,33 @@ define('NV_IS_MOD_TASKMANAGER', true);
  * nv_task_get_project()
  * 
  * @param int $project_id
+ * @param bool $use_cache
  * @return array|false
  */
-function nv_task_get_project($project_id)
+function nv_task_get_project($project_id, $use_cache = true)
 {
-    global $db, $db_config, $lang_data, $module_data;
+    global $db, $db_config, $lang_data, $module_data, $nv_Cache;
+    
+    $cacheFile = 'project_' . $project_id . '_' . NV_CACHE_PREFIX . '.cache';
+    $cacheTTL = 3600; // 1 hour
+    
+    if ($use_cache && ($cache = $nv_Cache->getItem($module_data, $cacheFile, ttl: $cacheTTL)) != false) {
+        return unserialize($cache);
+    }
     
     $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_projects 
             WHERE id = " . intval($project_id);
     $result = $db->query($sql);
     
     if ($result->rowCount()) {
-        return $result->fetch();
+        $project = $result->fetch();
+        
+        // Lưu vào cache
+        if ($use_cache) {
+            $nv_Cache->setItem($module_data, $cacheFile, serialize($project), ttl: $cacheTTL);
+        }
+        
+        return $project;
     }
     
     return false;
@@ -99,11 +114,19 @@ function nv_task_check_project_permission($project_id, $user_id)
  * nv_task_get_task()
  * 
  * @param int $task_id
+ * @param bool $use_cache
  * @return array|false
  */
-function nv_task_get_task($task_id)
+function nv_task_get_task($task_id, $use_cache = true)
 {
-    global $db, $db_config, $lang_data, $module_data;
+    global $db, $db_config, $lang_data, $module_data, $nv_Cache;
+    
+    $cacheFile = 'task_' . $task_id . '_' . NV_CACHE_PREFIX . '.cache';
+    $cacheTTL = 1800; // 30 minutes
+    
+    if ($use_cache && ($cache = $nv_Cache->getItem($module_data, $cacheFile, ttl: $cacheTTL)) != false) {
+        return unserialize($cache);
+    }
     
     $sql = "SELECT t.*, 
             u1.username as creator_username, u1.first_name as creator_first_name, u1.last_name as creator_last_name,
@@ -118,7 +141,14 @@ function nv_task_get_task($task_id)
     $result = $db->query($sql);
     
     if ($result->rowCount()) {
-        return $result->fetch();
+        $task = $result->fetch();
+        
+        // Lưu vào cache
+        if ($use_cache) {
+            $nv_Cache->setItem($module_data, $cacheFile, serialize($task), ttl: $cacheTTL);
+        }
+        
+        return $task;
     }
     
     return false;
@@ -165,11 +195,19 @@ function nv_task_check_task_permission($task_id, $user_id)
 /**
  * nv_task_get_status_list()
  * 
+ * @param bool $use_cache
  * @return array
  */
-function nv_task_get_status_list()
+function nv_task_get_status_list($use_cache = true)
 {
-    global $db, $db_config, $lang_data, $module_data;
+    global $db, $db_config, $lang_data, $module_data, $nv_Cache;
+    
+    $cacheFile = 'status_list_' . NV_CACHE_PREFIX . '.cache';
+    $cacheTTL = 7200; // 2 hours
+    
+    if ($use_cache && ($cache = $nv_Cache->getItem($module_data, $cacheFile, ttl: $cacheTTL)) != false) {
+        return unserialize($cache);
+    }
     
     $status_list = [];
     $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_status 
@@ -178,6 +216,11 @@ function nv_task_get_status_list()
     $result = $db->query($sql);
     while ($row = $result->fetch()) {
         $status_list[$row['status_key']] = $row;
+    }
+    
+    // Lưu vào cache
+    if ($use_cache) {
+        $nv_Cache->setItem($module_data, $cacheFile, serialize($status_list), ttl: $cacheTTL);
     }
     
     return $status_list;
@@ -504,4 +547,156 @@ function nv_task_has_circular_dependency($task_id, $dependency_task_id)
     }
     
     return false;
+}
+
+/**
+ * nv_task_clear_project_cache()
+ * Clear project cache
+ * 
+ * @param int $project_id
+ * @return bool
+ */
+function nv_task_clear_project_cache($project_id)
+{
+    global $nv_Cache, $module_data;
+    
+    $cacheFile = 'project_' . $project_id . '_' . NV_CACHE_PREFIX . '.cache';
+    return $nv_Cache->delItem($module_data, $cacheFile);
+}
+
+/**
+ * nv_task_clear_task_cache()
+ * Clear task cache
+ * 
+ * @param int $task_id
+ * @return bool
+ */
+function nv_task_clear_task_cache($task_id)
+{
+    global $nv_Cache, $module_data;
+    
+    $cacheFile = 'task_' . $task_id . '_' . NV_CACHE_PREFIX . '.cache';
+    return $nv_Cache->delItem($module_data, $cacheFile);
+}
+
+/**
+ * nv_task_clear_status_cache()
+ * Clear status list cache
+ * 
+ * @return bool
+ */
+function nv_task_clear_status_cache()
+{
+    global $nv_Cache, $module_data;
+    
+    $cacheFile = 'status_list_' . NV_CACHE_PREFIX . '.cache';
+    return $nv_Cache->delItem($module_data, $cacheFile);
+}
+
+/**
+ * nv_task_clear_all_cache()
+ * Clear all module cache
+ * 
+ * @return bool
+ */
+function nv_task_clear_all_cache()
+{
+    global $nv_Cache, $module_data;
+    
+    // Xóa toàn bộ cache của module
+    $nv_Cache->delModule($module_data);
+    return true;
+}
+
+/**
+ * nv_task_get_project_url()
+ * Get project friendly URL
+ * 
+ * @param int $project_id
+ * @param string $project_alias
+ * @return string
+ */
+function nv_task_get_project_url($project_id, $project_alias = '')
+{
+    global $global_config, $module_name;
+    
+    if (empty($project_alias)) {
+        $project = nv_task_get_project($project_id);
+        if ($project) {
+            $project_alias = !empty($project['alias']) ? $project['alias'] : change_alias($project['title']);
+        } else {
+            $project_alias = 'project';
+        }
+    }
+    
+    if ($global_config['rewrite_enable']) {
+        return NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=project/' . $project_alias . '-' . $project_id . $global_config['rewrite_exturl'];
+    }
+    
+    return NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=project-detail&amp;id=' . $project_id;
+}
+
+/**
+ * nv_task_get_task_url()
+ * Get task friendly URL
+ * 
+ * @param int $task_id
+ * @param string $task_alias
+ * @param string $project_alias
+ * @return string
+ */
+function nv_task_get_task_url($task_id, $task_alias = '', $project_alias = '')
+{
+    global $global_config, $module_name;
+    
+    if (empty($task_alias)) {
+        $task = nv_task_get_task($task_id);
+        if ($task) {
+            $task_alias = !empty($task['alias']) ? $task['alias'] : change_alias($task['title']);
+            
+            if (empty($project_alias) && !empty($task['project_id'])) {
+                $project = nv_task_get_project($task['project_id']);
+                if ($project) {
+                    $project_alias = !empty($project['alias']) ? $project['alias'] : change_alias($project['title']);
+                }
+            }
+        } else {
+            $task_alias = 'task';
+        }
+    }
+    
+    if ($global_config['rewrite_enable']) {
+        if (!empty($project_alias)) {
+            return NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=task/' . $project_alias . '/' . $task_alias . '-' . $task_id . $global_config['rewrite_exturl'];
+        }
+        return NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=task/' . $task_alias . '-' . $task_id . $global_config['rewrite_exturl'];
+    }
+    
+    return NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=task-detail&amp;id=' . $task_id;
+}
+
+/**
+ * nv_task_get_page_url()
+ * Get page friendly URL
+ * 
+ * @param string $page
+ * @param int $page_number
+ * @return string
+ */
+function nv_task_get_page_url($page, $page_number = 0)
+{
+    global $global_config, $module_name;
+    
+    if ($global_config['rewrite_enable']) {
+        if ($page_number > 1) {
+            return NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $page . '/page-' . $page_number . $global_config['rewrite_exturl'];
+        }
+        return NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $page . $global_config['rewrite_exturl'];
+    }
+    
+    if ($page_number > 1) {
+        return NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $page . '&amp;page=' . $page_number;
+    }
+    
+    return NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $page;
 }

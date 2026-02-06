@@ -101,3 +101,7 @@
 !/src/uploads/banners/webnhanh_vn.png
 !/src/data/cache/index.html
 !/src/data/tmp/index.html
+
+# TaskManager module - ignore SQL and MD files
+/src/modules/taskmanager/*.sql
+/src/modules/taskmanager/*.md

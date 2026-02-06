@@ -92,7 +92,7 @@ if (defined('NV_IS_USER')) {
 // Hiển thị dự án gần đây
 if (!empty($recent_projects)) {
     foreach ($recent_projects as $project) {
-        $project['link'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=project-detail&amp;id=' . $project['id'];
+        $project['link'] = nv_task_get_project_url($project['id'], $project['alias'] ?? '');
         // Lấy số lượng công việc
         $sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_taskmanager_tasks WHERE project_id = " . $project['id'];
         $project['total_tasks'] = $db->query($sql)->fetchColumn();
@@ -113,7 +113,7 @@ if (!empty($recent_tasks)) {
     $status_list = nv_task_get_status_list();
     
     foreach ($recent_tasks as $task) {
-        $task['link'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=task-detail&amp;id=' . $task['id'];
+        $task['link'] = nv_task_get_task_url($task['id'], $task['alias'] ?? '', '');
         $task['status_name'] = isset($status_list[$task['status']]) ? $status_list[$task['status']]['status_name'] : $task['status'];
         $task['status_color'] = isset($status_list[$task['status']]) ? $status_list[$task['status']]['color'] : '#6c757d';
         $task['priority_class'] = '';
